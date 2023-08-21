@@ -15,7 +15,7 @@ const StyledMuiButton = styled(MuiButton)`
   width: ${(props) => props.width || 'auto'};
   height: ${(props) => props.height || 'auto'};
   background-color: ${(props) => props.background || '#02131B !important'};
-  color: ${(props) => props.fontColor || 'white !important'};
+  color: ${(props) => props.fontColor || '#052E1B !important'};
   margin-top: ${(props) => props.margintop || '0'};
 
   &:hover {
