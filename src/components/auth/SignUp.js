@@ -54,15 +54,13 @@ export default function SignUp ({setHasLogin}) {
                     backgroundhover={"#C4ED6C !important"}
                 >{"Criar"}</Button>
             </ButtonContainer>
-            
-
             <ButtonSignUp onClick={() => setHasLogin(true)}>{"Já tem um Login? Entrar!!"}</ButtonSignUp>
         </Container>
     )
 }
 const Container = styled.div`
     width: 50%;
-    min-height: 70vh;
+    min-height: 65vh;
     padding: 0 4vw;
     display: flex;
     flex-direction: column;

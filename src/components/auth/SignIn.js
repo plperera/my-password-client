@@ -44,7 +44,7 @@ export default function SignIn ({setHasLogin}) {
 }
 const Container = styled.div`
     width: 50%;
-    min-height: 70vh;
+    min-height: 65vh;
     padding: 0 4vw;
     display: flex;
     flex-direction: column;
@@ -52,7 +52,7 @@ const Container = styled.div`
     row-gap: 2vh;
     h1 {
         font-size: 50px;
-        margin-top: 6vh;
+        margin-top: 11vh;
         margin-bottom: 3vh;
         color: #d4ed6cff;
     }

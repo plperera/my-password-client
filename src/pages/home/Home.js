@@ -1,10 +1,12 @@
 import styled from "styled-components"
+import Content from "../../components/home/Content/Content"
 
 export default function Home () {
 
     return(
         <Container>
-        
+            <Dashboard/>
+            <Content/>
         </Container>
     )
 }
