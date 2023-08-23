@@ -49,11 +49,11 @@ export default function PasswordStrongLevelBar ({validation}) {
 
     return(
         <Container>
-            <Level hasProgress={progressLevel >= 1} color={levelRef[progressLevel].color} style={{ borderRadius: "50px 0 0 50px"}}></Level>
-            <Level hasProgress={progressLevel >= 2} color={levelRef[progressLevel].color}></Level>
-            <Level hasProgress={progressLevel >= 3} color={levelRef[progressLevel].color}></Level>
-            <Level hasProgress={progressLevel >= 4} color={levelRef[progressLevel].color}></Level>
-            <Level hasProgress={progressLevel >= 5} color={levelRef[progressLevel].color} style={{ borderRadius: "0px 50px 50px 0px"}}></Level>
+            <Level hasProgress={progressLevel >= 1} color={levelRef[progressLevel]?.color} style={{ borderRadius: "50px 0 0 50px"}}></Level>
+            <Level hasProgress={progressLevel >= 2} color={levelRef[progressLevel]?.color}></Level>
+            <Level hasProgress={progressLevel >= 3} color={levelRef[progressLevel]?.color}></Level>
+            <Level hasProgress={progressLevel >= 4} color={levelRef[progressLevel]?.color}></Level>
+            <Level hasProgress={progressLevel >= 5} color={levelRef[progressLevel]?.color} style={{ borderRadius: "0px 50px 50px 0px"}}></Level>
             <TitleLevel color={levelRef[progressLevel].color}>{"Nível da senha: "}<span>{levelRef[progressLevel].strongLevel}</span></TitleLevel>
         </Container>         
     )

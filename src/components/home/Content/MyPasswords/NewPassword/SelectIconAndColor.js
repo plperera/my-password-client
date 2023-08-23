@@ -5,19 +5,21 @@ import COLOR_MAPPING from "../../../../../common/icons/colorObj";
 import { useEffect } from "react";
 import { useState } from "react";
 
-export default function SelectIconAndColor () {
+export default function SelectIconAndColor ({form, setForm}) {
 
-    const [ selectedIcon, setSelectedIcon ] = useState(ICON_MAPPING["RiLockPasswordFill"]) 
+    const [ selectedIconName, setSelectedIconName ] = useState("RiLockPasswordFill") 
+    const [ selectedIcon, setSelectedIcon ] = useState("RiLockPasswordFill") 
     const [ selectedColor, setSelectedColor ] = useState("#0E5708") 
     const [ showCase, setShowCase ] = useState(undefined)
 
-    function teste(){
-        Object.keys(ICON_MAPPING).map( key => console.log(ICON_MAPPING[key]))
-    }
+    useEffect(() => {
+        setForm({...form, color: selectedColor, icon: selectedIconName})
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedColor, selectedIconName, form?.type])
 
     useEffect(() => {
-        teste()
-    }, [])
+        setSelectedIcon(ICON_MAPPING[selectedIconName])
+    }, [selectedIconName])
 
     function handleShowCase(ref){
         if ( ref === showCase) {
@@ -33,7 +35,7 @@ export default function SelectIconAndColor () {
             setSelectedColor(item)
             return
         }
-        setSelectedIcon(item)
+        setSelectedIconName(item)
         return 
     }
 
@@ -53,8 +55,8 @@ export default function SelectIconAndColor () {
 
                 {showCase === "showColorShowcase" ? (
                     <ShowcaseContainer color={selectedColor}>
-                        {Object.values(ICON_MAPPING).map((IconComponent, index) => (
-                            <IconComponent key={index} onClick={() => handleSelect({type: "icon", item: IconComponent})}/>
+                        {Object.entries(ICON_MAPPING).map(([iconName, IconComponent], index) => (
+                            <IconComponent key={index} onClick={() => handleSelect({type: "icon", item: iconName})}/>
                         ))}
                     </ShowcaseContainer>
                 ):(

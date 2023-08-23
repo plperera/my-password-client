@@ -22,16 +22,15 @@ export default function NewPassword ({setShowPasswordForms}) {
     })
 
     useEffect(() => {
-        console.log(validation)
-    }, [validation])
+        console.log(form)
+    }, [form])
 
-    function handlePassword({ target: { value, name } }){
-
-        const minLength = value?.length >= 6;
-        const hasDigit = /[0-9]/.test(value);
-        const hasLowercase = /[a-z]/.test(value);
-        const hasUppercase = /[A-Z]/.test(value);
-        const hasSpecialCharacter = /[!@#$%^&*()\-+]/.test(value);
+    function handleValidation(){
+        const minLength = form?.password?.length >= 6;
+        const hasDigit = /[0-9]/.test(form?.password);
+        const hasLowercase = /[a-z]/.test(form?.password);
+        const hasUppercase = /[A-Z]/.test(form?.password);
+        const hasSpecialCharacter = /[!@#$%^&*()\-+]/.test(form?.password);
 
         setValidation({
             minLength,
@@ -40,22 +39,11 @@ export default function NewPassword ({setShowPasswordForms}) {
             hasUppercase,
             hasSpecialCharacter
         })
-        
-        setForm({ ...form, [name]: value });
           
     }
 
-    useEffect(() => {
+    useEffect(() => {handleValidation()}, [form?.password])
 
-    }, [form])
-
-    // {
-    //     name: "YouTube",
-    //     color: "#C75858",
-    //     icon: "MdMonitor",
-    //     passwordLevel: "",
-    //     linkRef: "https://www.youtube.com/",
-    // },
     return(
         <Container>
             <SubContainer>
@@ -67,46 +55,129 @@ export default function NewPassword ({setShowPasswordForms}) {
 
                 <MiddleContainer>
 
-                    <InformationType/>
+                    <InformationType setForm={setForm} form={form}/>
 
-                    <InputDark 
-                        label="Nome / Apelido"     
-                        type="text" 
-                        name={"name"} 
-                        width="80%"
-                        onChange={handleForm}
-                        value={form?.name}
-                    />
-                    <InputDark 
-                        label="Link / Referência"     
-                        type="text" 
-                        name={"ref"} 
-                        width="80%"
-                        onChange={handleForm}
-                        value={form?.ref}
-                    />
-                    <InputDark 
-                        label="Email"     
-                        type="text" 
-                        name={"email"} 
-                        width="80%"
-                        onChange={handleForm}
-                        value={form?.email}
-                    />
-                    <InputDark 
-                        label="Senha"     
-                        type={showPassword ? ("text"):("password")} 
-                        name={"password"} 
-                        width="80%"
-                        onChange={handlePassword}
-                        value={form?.password}
-                    />
+                    {form?.type === "Login" ? (
+                        <>
+                            <InputDark 
+                            label="Nome / Apelido"     
+                            type="text" 
+                            name={"name"} 
+                            width="80%"
+                            onChange={handleForm}
+                            value={form?.name}
+                            />
+                            <InputDark 
+                                label="Link / Referência"     
+                                type="text" 
+                                name={"ref"} 
+                                width="80%"
+                                onChange={handleForm}
+                                value={form?.ref}
+                            />
+                            <InputDark 
+                                label="Email"     
+                                type="text" 
+                                name={"email"} 
+                                width="80%"
+                                onChange={handleForm}
+                                value={form?.email}
+                            />
+                            <InputDark 
+                                label="Senha"     
+                                type={showPassword ? ("text"):("password")} 
+                                name={"password"} 
+                                width="80%"
+                                onChange={handleForm}
+                                value={form?.password}
+                            />
 
-                    <PasswordIconContainer onClick={() => setShowPassword(!showPassword)}>
-                        {showPassword ? (<BsFillEyeSlashFill/>):(<BsFillEyeFill/>)}
-                    </PasswordIconContainer>
+                            <PasswordIconContainer onClick={() => setShowPassword(!showPassword)}>
+                                {showPassword ? (<BsFillEyeSlashFill/>):(<BsFillEyeFill/>)}
+                            </PasswordIconContainer>
 
-                    <PasswordValidation validation={validation}/>
+                            <PasswordValidation validation={validation}/>
+                        </>
+                    ):(
+                        form?.type === "Cartão" ? (
+                            <>
+                                <InputDark 
+                                label="Nome / Apelido / Título"     
+                                type="text" 
+                                name={"name"} 
+                                width="80%"
+                                onChange={handleForm}
+                                value={form?.name}
+                                />
+                                <InputDark 
+                                    label="Nome Impresso no Cartão"     
+                                    type="text" 
+                                    name={"cardOwner"} 
+                                    width="80%"
+                                    onChange={handleForm}
+                                    value={form?.cardOwner}
+                                />
+                                <InputDark 
+                                    label="Número do Cartão"     
+                                    type="text" 
+                                    name={"cardNumber"} 
+                                    width="80%"
+                                    onChange={handleForm}
+                                    value={form?.cardNumber}
+                                />
+                                <InputDark 
+                                    label="Senha do Cartão"     
+                                    type={showPassword ? ("text"):("password")} 
+                                    name={"cardPassword"} 
+                                    width="80%"
+                                    onChange={handleForm}
+                                    value={form?.cardPassword}
+                                />
+                                <InputDark 
+                                    label="CVC / Código de Segurança"     
+                                    type="text" 
+                                    name={"cvc"} 
+                                    width="80%"
+                                    onChange={handleForm}
+                                    value={form?.cvc}
+                                />
+                                <InputDark 
+                                    label="Data de Expiração"     
+                                    type="text" 
+                                    name={"expirationDate"} 
+                                    width="80%"
+                                    onChange={handleForm}
+                                    value={form?.expirationDate}
+                                />
+
+                                <PasswordIconContainer onClick={() => setShowPassword(!showPassword)}>
+                                    {showPassword ? (<BsFillEyeSlashFill/>):(<BsFillEyeFill/>)}
+                                </PasswordIconContainer>
+
+                            </>
+                        ):(
+                            <>
+                                <InputDark 
+                                label="Nome / Apelido / Título"     
+                                type="text" 
+                                name={"name"} 
+                                width="80%"
+                                onChange={handleForm}
+                                value={form?.name}
+                                />
+                                <InputDark 
+                                    label="Anotação"     
+                                    type="text" 
+                                    name={"note"} 
+                                    width="80%"
+                                    onChange={handleForm}
+                                    value={form?.note}
+                                />
+                            </>
+                        )
+                    )}
+
+                    
 
                     <ButtonContainer>
                         <Button 

@@ -1,9 +1,14 @@
 import { useState } from "react"
 import styled from "styled-components"
 import SelectIconAndColor from "./SelectIconAndColor"
+import { useEffect } from "react"
 
-export default function InformationType () {
+export default function InformationType ({form, setForm}) {
     const [selectedType, setSelectedType ] = useState("Login")
+    useEffect(() => {
+        setForm({...form, type: selectedType, password:''})
+    }, [selectedType])
+
     return(
         <Container>
             <OptionsContainer>
@@ -11,7 +16,7 @@ export default function InformationType () {
                 <OptionCard onClick={() => setSelectedType("Cartão")} isSelected={selectedType === "Cartão"}>{"Cartão"}</OptionCard>
                 <OptionCard onClick={() => setSelectedType("Outro")} isSelected={selectedType === "Outro"} style={{ borderRadius: "0px 7px 7px 0px", border: "none"}}>{"Outro"}</OptionCard>
             </OptionsContainer>
-            <SelectIconAndColor/>
+            <SelectIconAndColor setForm={setForm} form={form}/>
         </Container>         
     )
 }
