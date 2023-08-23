@@ -4,10 +4,12 @@ import Filter from "./Filter"
 import PasswordCard from "./PasswordCard"
 import { useState } from "react"
 import { useEffect } from "react"
+import NewPassword from "./NewPassword/NewPassword"
 
 export default function MyPasswords () {
 
     const [ result, setResult ] = useState('')
+    const [ showPasswordForms, setShowPasswordForms ] = useState(true)
 
     const PasswordsData = [
         {
@@ -80,7 +82,8 @@ export default function MyPasswords () {
     }, [])
 
     return(
-        <Container>          
+        <Container>     
+            {showPasswordForms ? (<NewPassword setShowPasswordForms={setShowPasswordForms}/>):(<></>)}     
             <UpperContainer>
                 <h1>{"Minhas Senhas"}</h1>
                 <SearchBar/>
@@ -88,7 +91,7 @@ export default function MyPasswords () {
 
             <MiddleContainer>
                 <Filter/>
-                <NewPasswordButton>{"Adicionar Senha"}</NewPasswordButton>
+                <NewPasswordButton onClick={() => setShowPasswordForms(true)}>{"Adicionar Senha"}</NewPasswordButton>
             </MiddleContainer>
 
             <BottomContainer>

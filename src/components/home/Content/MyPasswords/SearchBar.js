@@ -5,7 +5,6 @@ import styled from "styled-components"
 export default function SearchBar () {
 
     const [ search, setSearch ] = useState('')
-    const [ result, setResult ] = useState('')
 
     function handleResult({ target: { value }}){
         // const result = products.filter(e => e.name.toLowerCase().includes(value.toLowerCase()))
