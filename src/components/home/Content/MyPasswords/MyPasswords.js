@@ -9,7 +9,7 @@ import NewPassword from "./NewPassword/NewPassword"
 export default function MyPasswords () {
 
     const [ result, setResult ] = useState('')
-    const [ showPasswordForms, setShowPasswordForms ] = useState(true)
+    const [ showPasswordForms, setShowPasswordForms ] = useState(false)
 
     const PasswordsData = [
         {
@@ -70,7 +70,7 @@ export default function MyPasswords () {
         },
         {
             name: "SnapChat",
-            color: "#FFFB0D",
+            color: "#DAA208",
             icon: "RiLockPasswordFill",
             passwordLevel: "",
             linkRef: "https://www.snapchat.com/pt-BR",

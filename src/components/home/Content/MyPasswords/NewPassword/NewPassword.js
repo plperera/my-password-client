@@ -6,6 +6,8 @@ import InputDark from "../../../../../common/form/InputDark";
 import { useState } from "react";
 import { useEffect } from "react";
 import PasswordValidation from "./PasswordValidation";
+import InformationType from "./InformationType";
+import Button from "../../../../../common/form/Button";
 
 export default function NewPassword ({setShowPasswordForms}) {
     const [form, handleForm, setForm] = useCustomForm()
@@ -64,13 +66,32 @@ export default function NewPassword ({setShowPasswordForms}) {
                 </UpperContainer>
 
                 <MiddleContainer>
+
+                    <InformationType/>
+
                     <InputDark 
-                        label="Nome"     
+                        label="Nome / Apelido"     
                         type="text" 
                         name={"name"} 
                         width="80%"
                         onChange={handleForm}
                         value={form?.name}
+                    />
+                    <InputDark 
+                        label="Link / Referência"     
+                        type="text" 
+                        name={"ref"} 
+                        width="80%"
+                        onChange={handleForm}
+                        value={form?.ref}
+                    />
+                    <InputDark 
+                        label="Email"     
+                        type="text" 
+                        name={"email"} 
+                        width="80%"
+                        onChange={handleForm}
+                        value={form?.email}
                     />
                     <InputDark 
                         label="Senha"     
@@ -80,15 +101,23 @@ export default function NewPassword ({setShowPasswordForms}) {
                         onChange={handlePassword}
                         value={form?.password}
                     />
+
                     <PasswordIconContainer onClick={() => setShowPassword(!showPassword)}>
                         {showPassword ? (<BsFillEyeSlashFill/>):(<BsFillEyeFill/>)}
                     </PasswordIconContainer>
 
                     <PasswordValidation validation={validation}/>
 
-                </MiddleContainer>
+                    <ButtonContainer>
+                        <Button 
+                            width={"100%"} 
+                            height={"55px"}
+                            background={"#d4ed6cff !important"}
+                            backgroundhover={"#C4ED6C !important"}
+                        >{"Criar"}</Button>
+                    </ButtonContainer>
 
-                <BottomContainer></BottomContainer>
+                </MiddleContainer>
             </SubContainer>
         </Container>
     )
@@ -103,13 +132,14 @@ const Container = styled.div`
     background-color: #131313A2;
     z-index: 2;
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: center;
+    padding-top: 2vh;
 `
 const SubContainer = styled.div`
     width: 50%;
     right: 30vw;
-    background-color: #FCF5EC;
+    background-color: #FAFAFA;
     z-index: 3;
     display: flex;
     flex-direction: column;
@@ -117,7 +147,7 @@ const SubContainer = styled.div`
 `
 const UpperContainer = styled.div`
     width: 100%;
-    height: 100px;
+    height: 70px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -134,23 +164,18 @@ const UpperContainer = styled.div`
 `
 const MiddleContainer = styled.div`
     width: 100%;
-    height: 700px;
-    border: 1px solid blue;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: start;
     flex-direction: column;
     padding-top: 2vh;
     row-gap: 1.4vh;
-`
-const BottomContainer = styled.div`
-    width: 100%;
-    height: 100px;
-    border: 1px solid green;
+    padding-bottom: 50px;
 `
 const PasswordIconContainer = styled.div`
     position: absolute;
-    top: 27.3vh;
+    top: 42vh;
     right: 31vw;
     color: #052E1B;
     cursor: pointer;
@@ -158,4 +183,11 @@ const PasswordIconContainer = styled.div`
         font-size: 30px;
         user-select: none;
     }
+`
+const ButtonContainer = styled.div`
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3vh;
 `
