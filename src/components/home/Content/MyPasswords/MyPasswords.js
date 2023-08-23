@@ -83,15 +83,16 @@ export default function MyPasswords () {
 
     return(
         <Container>     
-            {showPasswordForms ? (<NewPassword setShowPasswordForms={setShowPasswordForms}/>):(<></>)}     
+            {showPasswordForms === "showNewPassword" ? (<NewPassword setShowPasswordForms={setShowPasswordForms}/>):(<></>)}     
+            {showPasswordForms === "showFilter" ? (<Filter setShowPasswordForms={setShowPasswordForms}/>):(<></>)}     
             <UpperContainer>
                 <h1>{"Minhas Senhas"}</h1>
                 <SearchBar/>
             </UpperContainer>
 
             <MiddleContainer>
-                <Filter/>
-                <NewPasswordButton onClick={() => setShowPasswordForms(true)}>{"Adicionar Senha"}</NewPasswordButton>
+                <FilterButton onClick={() => setShowPasswordForms("showFilter")}>{"Filtrar"}</FilterButton>
+                <NewPasswordButton onClick={() => setShowPasswordForms("showNewPassword")}>{"Adicionar Senha"}</NewPasswordButton>
             </MiddleContainer>
 
             <BottomContainer>
@@ -146,6 +147,18 @@ const NewPasswordButton = styled.div`
     background-color: #D4ED6C;
     border-radius: 5px;
     font-size: 20px;
+    user-select: none;
+    cursor: pointer;
+`
+const FilterButton = styled.div`
+    width: 200px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    background-color: #EBEBEB;
+    border-radius: 5px;
     user-select: none;
     cursor: pointer;
 `

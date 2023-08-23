@@ -145,7 +145,7 @@ const ColorContainer = styled.div`
     height: 27px;
     background-color: ${props => props.color};
     border-radius: 50px;
-    border: 3px outset #4B4B4B;
+    border: 0px outset #4B4B4B;
     cursor: pointer;
 `
 const ShowcaseContainer = styled.div`
@@ -156,7 +156,7 @@ const ShowcaseContainer = styled.div`
     background-color: #d9d9d9;
     z-index: 2;
     top: 4.5vh;
-    left: 0;
+    right: 0;
     border-radius: 5px;
     display: grid;
     grid-template-columns: repeat(6, 1fr);

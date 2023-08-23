@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { FaWindowClose } from 'react-icons/fa';
+import { AiOutlineClose } from 'react-icons/ai';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { useCustomForm } from "../../../../../hooks/useCustomForms";
 import InputDark from "../../../../../common/form/InputDark";
@@ -48,10 +48,10 @@ export default function NewPassword ({setShowPasswordForms}) {
         <Container>
             <SubContainer>
 
-                <UpperContainer onClick={() => setShowPasswordForms(false)}>
+                <UpperContainer>
                     <h1>{"Adicionar Senha"}</h1>
-                    <FaWindowClose/>
-                </UpperContainer>
+                    <AiOutlineClose onClick={() => setShowPasswordForms(false)}/>
+                </UpperContainer >
 
                 <MiddleContainer>
 
@@ -229,8 +229,9 @@ const UpperContainer = styled.div`
         font-weight: 600;
     }
     svg {
-        font-size: 40px;
+        font-size: 32px;
         cursor: pointer;
+        margin-right: -2px;
     }
 `
 const MiddleContainer = styled.div`
