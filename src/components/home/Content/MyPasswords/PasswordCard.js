@@ -2,12 +2,15 @@ import styled from "styled-components"
 import ICON_MAPPING from "../../../../common/icons/iconsObj";
 import { RiLockPasswordFill } from 'react-icons/ri';
 
-export default function PasswordCard ({PasswordData}) {
+export default function PasswordCard ({PasswordData, setShowOverContainer, setPasswordSelected}) {
     const IconComponent = ICON_MAPPING[PasswordData?.icon]
-    
+    function handleSelect(){
+        setPasswordSelected(PasswordData)
+        setShowOverContainer("showPasswordExpanded")
+    }
     return(
         
-        <Container color={PasswordData?.color}>  
+        <Container color={PasswordData?.color} onClick={() => handleSelect()}>  
 
             <IconContainer color={PasswordData?.color}>
                 {IconComponent ? (<IconComponent/>):(<RiLockPasswordFill/>)}

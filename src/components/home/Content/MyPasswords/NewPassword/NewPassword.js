@@ -9,7 +9,7 @@ import PasswordValidation from "./PasswordValidation";
 import InformationType from "./InformationType";
 import Button from "../../../../../common/form/Button";
 
-export default function NewPassword ({setShowPasswordForms}) {
+export default function NewPassword ({setShowOverContainer}) {
     const [form, handleForm, setForm] = useCustomForm()
     const [ showPassword, setShowPassword ] = useState(false)
 
@@ -42,6 +42,7 @@ export default function NewPassword ({setShowPasswordForms}) {
           
     }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {handleValidation()}, [form?.password])
 
     return(
@@ -50,7 +51,7 @@ export default function NewPassword ({setShowPasswordForms}) {
 
                 <UpperContainer>
                     <h1>{"Adicionar Senha"}</h1>
-                    <AiOutlineClose onClick={() => setShowPasswordForms(false)}/>
+                    <AiOutlineClose onClick={() => setShowOverContainer(false)}/>
                 </UpperContainer >
 
                 <MiddleContainer>

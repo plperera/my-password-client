@@ -3,7 +3,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import Button from "../../../../common/form/Button";
 import { useCustomForm } from "../../../../hooks/useCustomForms";
 
-export default function Filter ({setShowPasswordForms}) {
+export default function Filter ({setShowOverContainer}) {
     const [form, handleForm] = useCustomForm()
     return(
         <Container>
@@ -11,7 +11,7 @@ export default function Filter ({setShowPasswordForms}) {
 
                 <UpperContainer>
                     <h1>{"Filtrar"}</h1>
-                    <AiOutlineClose onClick={() => setShowPasswordForms(false)}/>
+                    <AiOutlineClose onClick={() => setShowOverContainer(false)}/>
                 </UpperContainer>
 
                 <MiddleContainer>

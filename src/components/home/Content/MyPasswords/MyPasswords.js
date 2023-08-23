@@ -5,98 +5,120 @@ import PasswordCard from "./PasswordCard"
 import { useState } from "react"
 import { useEffect } from "react"
 import NewPassword from "./NewPassword/NewPassword"
+import PasswordExpanded from "./PasswordExpanded/PasswordExpanded"
 
 export default function MyPasswords () {
 
     const [ result, setResult ] = useState('')
-    const [ showPasswordForms, setShowPasswordForms ] = useState(false)
+    const [ showOverContainer, setShowOverContainer ] = useState(false)
+    const [ passwordSelected, setPasswordSelected ] = useState(false)
 
     const PasswordsData = [
         {
             name: "YouTube",
+            email: "pedro@email.com",
+            password: "1234567",
             color: "#C75858",
             icon: "MdMonitor",
             passwordLevel: "",
-            linkRef: "https://www.youtube.com/",
+            ref: "https://www.youtube.com/",
         },
         {
             name: "Notebook",
+            email: "pedro@email.com",
+            password: "1234567",
             color: "#58ADC7",
             icon: "MdComputer",
             passwordLevel: "",
-            linkRef: "",
+            ref: "",
         },
         {
             name: "gmail",
+            email: "pedro@email.com",
+            password: "1234567",
             color: "#4E4E4E",
             icon: "AiOutlineMail",
             passwordLevel: "",
-            linkRef: "https://mail.google.com/mail/",
+            ref: "https://mail.google.com/mail/",
         },
         {
             name: "Cartão Nubank",
+            email: "pedro@email.com",
+            password: "1234567",
             color: "#9B58C7",
             icon: "BsFillCreditCardFill",
             passwordLevel: "",
-            linkRef: "",
+            ref: "",
         },
         {
             name: "Cartão Inter",
+            email: "pedro@email.com",
+            password: "1234567",
             color: "#C78A58",
             icon: "AiFillCreditCard",
             passwordLevel: "",
-            linkRef: "",
+            ref: "",
         },
         {
             name: "CNH",
+            email: "pedro@email.com",
+            password: "1234567",
             color: "#4E4E4E",
             icon: "HiIdentification",
             passwordLevel: "",
-            linkRef: "",
+            ref: "",
         },
         {
             name: "Celular",
+            email: "pedro@email.com",
+            password: "1234567",
             color: "#5863C7",
             icon: "MdOutlinePhoneIphone",
             passwordLevel: "",
-            linkRef: "99935-1124",
+            ref: "99935-1124",
         },
         {
             name: "Endereço",
+            email: "pedro@email.com",
+            password: "1234567",
             color: "#C75895",
             icon: "MdOutlineOtherHouses",
             passwordLevel: "",
-            linkRef: "Apartamento",
+            ref: "Apartamento",
         },
         {
             name: "SnapChat",
+            email: "pedro@email.com",
+            password: "1234567",
             color: "#DAA208",
             icon: "RiLockPasswordFill",
             passwordLevel: "",
-            linkRef: "https://www.snapchat.com/pt-BR",
+            ref: "https://www.snapchat.com/pt-BR",
         },
     ];
 
     useEffect(() => {
         setResult(PasswordsData)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return(
         <Container>     
-            {showPasswordForms === "showNewPassword" ? (<NewPassword setShowPasswordForms={setShowPasswordForms}/>):(<></>)}     
-            {showPasswordForms === "showFilter" ? (<Filter setShowPasswordForms={setShowPasswordForms}/>):(<></>)}     
+            {showOverContainer === "showNewPassword" ? (<NewPassword setShowOverContainer={setShowOverContainer}/>):(<></>)}     
+            {showOverContainer === "showFilter" ? (<Filter setShowOverContainer={setShowOverContainer}/>):(<></>)}     
+            {showOverContainer === "showPasswordExpanded" ? (<PasswordExpanded setShowOverContainer={setShowOverContainer} setPasswordSelected={setPasswordSelected} passwordData={passwordSelected}/>):(<></>)}     
             <UpperContainer>
                 <h1>{"Minhas Senhas"}</h1>
                 <SearchBar/>
             </UpperContainer>
 
             <MiddleContainer>
-                <FilterButton onClick={() => setShowPasswordForms("showFilter")}>{"Filtrar"}</FilterButton>
-                <NewPasswordButton onClick={() => setShowPasswordForms("showNewPassword")}>{"Adicionar Senha"}</NewPasswordButton>
+                <FilterButton onClick={() => setShowOverContainer("showFilter")}>{"Filtrar"}</FilterButton>
+                <NewPasswordButton onClick={() => setShowOverContainer("showNewPassword")}>{"Adicionar Senha"}</NewPasswordButton>
             </MiddleContainer>
 
             <BottomContainer>
-                {PasswordsData ? (PasswordsData?.map(e => <PasswordCard PasswordData={e}/>)):(<></>)}
+                {PasswordsData ? (PasswordsData?.map(e => <PasswordCard PasswordData={e} setShowOverContainer={setShowOverContainer} setPasswordSelected={setPasswordSelected}/>)):(<></>)}
             </BottomContainer>
         </Container>
     )
