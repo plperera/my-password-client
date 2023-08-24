@@ -4,12 +4,9 @@ import Button from "../../../../common/form/Button";
 import api from "../../../../services/API";
 import { toast } from "react-toastify";
 
-
-export default function Filter ({setShowOverContainer, token, setFilteredItensData, form, handleForm}) {
+export default function Filter ({setShowOverContainer, token, setFilteredItensData, form, handleForm, setForm}) {
     async function getFilteredItens(){
-        console.log(form)
         try {
-            
             const orderBy = form?.orderBy?.replace(/ /g, "")
             const orderByRef = {
                 MaisRecentes: "orderByUpdatedAtDesc",
@@ -17,8 +14,9 @@ export default function Filter ({setShowOverContainer, token, setFilteredItensDa
                 SenhasmaisFortes: "orderByPasswordStrongLeverAsc",
                 SenhasmaisFRACAS: "orderByPasswordStrongLeverDesc"
             }
+            const formatedIncludes = form?.includes?.map(e => e?.toLowerCase())
             const body = {
-                includes: form?.typeFilter?.toLowerCase(),
+                includes: formatedIncludes.join("AND"),
                 orderBy: orderByRef[orderBy] 
             }
             const result = await api.GetAllItemDataWithFilter({query: body, token})
@@ -34,7 +32,21 @@ export default function Filter ({setShowOverContainer, token, setFilteredItensDa
             console.log(error)
         }
     }
-    
+    function customHandleForm({ target }) {
+        if(target.value === undefined){
+            return
+        }
+        let newIncludesArray = form?.includes || []
+
+        if (newIncludesArray?.includes(target?.value)){
+            newIncludesArray = newIncludesArray.filter(e => e !== target?.value)
+            setForm({...form, includes: newIncludesArray})
+            return
+        }
+        newIncludesArray.push(target.value)
+        setForm({...form, includes: newIncludesArray})
+        return
+    }
     return(
         <Container>
             <SubContainer>
@@ -63,17 +75,18 @@ export default function Filter ({setShowOverContainer, token, setFilteredItensDa
                         </div>
                         <div>
                             <h2>{"Selecione o Tipo: "}</h2>
-                            <Select 
+                            <MultipleSelect 
                                 placeholder="Parcelas"   
                                 type="text" 
-                                name={"typeFilter"} 
-                                value={form?.typeFilter} 
-                                onChange={handleForm}
+                                name={"includes"} 
+                                value={form?.includes} 
+                                onChange={customHandleForm}
+                                multiple={true}
                             >
                                 <option>{"Login"}</option>
                                 <option>{"Cartão"}</option>
                                 <option>{"Outro"}</option>
-                            </Select>
+                            </MultipleSelect>
                         </div>
                     </OrderByContainer>
 
@@ -107,7 +120,7 @@ const Container = styled.div`
     padding-top: 2vh;
 `
 const SubContainer = styled.div`
-    width: 28%;
+    width: 22%;
     height: auto;
     right: 30vw;
     background-color: #FAFAFA;
@@ -155,20 +168,27 @@ const ButtonContainer = styled.div`
 `
 const OrderByContainer = styled.div`
     width: 100%;
-    height: 100px;
+    height: 240px;
     padding: 0 2vw;
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
+    row-gap: 2vh;
     > div {
-        width: 48%;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
     }
     div > h2 { 
+        width: 90%;
         font-size: 14px;
         margin-bottom: 5px;
     }
 `
 const Select = styled.select`
-    width: 100%;
+    width: 90%;
     height: 60px;
     appearance: none;
     outline: none;
@@ -176,7 +196,6 @@ const Select = styled.select`
     border-radius: 4px;
     padding: 8px 10px;
     background-color: #fff;
-    font-size: 17px;
     color: #171717A8;
     cursor: pointer;
     font-size: 15px;
@@ -184,8 +203,36 @@ const Select = styled.select`
     &:focus {
         border: 2px solid #094B2C;
     }
-
     &:disabled {
         opacity: 0.5;
     }
 `;
+const MultipleSelect = styled(Select)`
+    height: 120px;
+    font-size: 17px;
+    
+    &:hover {
+        border-color: #082a20;
+    }
+
+    &:focus {
+        outline: none;
+    }
+    
+    option {
+        background-color: none;
+        margin-bottom: 7px;
+        padding: 4px 8px;
+        &:hover {
+            background-color: #e0e0e0;
+        }
+
+        &:checked {
+            border-left: 4px solid #66bb6a;
+            background-color: #DADADA59;
+            color: #171717A8;
+            font-size: 17px;
+            font-weight: 600;
+        }
+    }
+`

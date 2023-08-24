@@ -18,7 +18,7 @@ export default function MyPasswords () {
     const [ itensData, setItensData ] = useState(undefined)
     const [ filteredItensData, setFilteredItensData ] = useState(undefined)
     const [ refresh, setRefresh ] = useState(0)
-    const [form, handleForm] = useCustomForm({
+    const [form, handleForm, setForm] = useCustomForm({
         orderBy: "Mais Recentes",
         typeFilter: "Login",
     })
@@ -88,6 +88,7 @@ export default function MyPasswords () {
                         setFilteredItensData={setFilteredItensData}
                         form={form}
                         handleForm={handleForm}
+                        setForm={setForm}
                     />):(<></>)}     
                 {showOverContainer === "showPasswordExpanded" ? (
                     <PasswordExpanded  
