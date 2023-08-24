@@ -36,11 +36,23 @@ export default function PasswordExpanded ({setShowOverContainer, itemId, itemTyp
     })
 
     const IconComponent = ICON_MAPPING[itemData?.iconName]
-
+    function formatType(type){
+        const typeList = {
+            Cartão: "card",
+            Cartao: "card",
+            cartao: "card",
+            Login: "login",
+            login: "login",
+            otherNotes: "other",
+            Outro: "other",
+        }
+        return typeList[type]
+    }
     async function getItemData(){
         try {
+            console.log(itemType)
             const body = {
-                type: itemType,
+                type: formatType(itemType),
                 itemId: itemId
             }
             console.log(body)
@@ -336,7 +348,6 @@ const IconContainer = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    cursor: pointer;
     h3 {
         font-size: 14px;
         color: #9D9D9D;

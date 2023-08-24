@@ -5,6 +5,18 @@ import api from "../../../../services/API";
 import { toast } from "react-toastify";
 
 export default function Filter ({setShowOverContainer, token, setFilteredItensData, form, handleForm, setForm}) {
+    function formatType(type){
+        const typeList = {
+            Cartão: "card",
+            Cartao: "card",
+            cartao: "card",
+            Login: "login",
+            login: "login",
+            otherNotes: "other",
+            Outro: "other",
+        }
+        return typeList[type]
+    }
     async function getFilteredItens(){
         try {
             const orderBy = form?.orderBy?.replace(/ /g, "")
@@ -14,7 +26,7 @@ export default function Filter ({setShowOverContainer, token, setFilteredItensDa
                 SenhasmaisFortes: "orderByPasswordStrongLeverAsc",
                 SenhasmaisFRACAS: "orderByPasswordStrongLeverDesc"
             }
-            const formatedIncludes = form?.includes?.map(e => e?.toLowerCase())
+            const formatedIncludes = form?.includes?.map(e => formatType(e))
             const body = {
                 includes: formatedIncludes.join("AND"),
                 orderBy: orderByRef[orderBy] 

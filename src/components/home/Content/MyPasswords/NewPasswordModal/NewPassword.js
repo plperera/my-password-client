@@ -25,7 +25,11 @@ export default function NewPassword ({setShowOverContainer, token}) {
     function formatType(type){
         const typeList = {
             Cartão: "card",
+            Cartao: "card",
+            cartao: "card",
             Login: "login",
+            login: "login",
+            otherNotes: "other",
             Outro: "other",
         }
         return typeList[type]
