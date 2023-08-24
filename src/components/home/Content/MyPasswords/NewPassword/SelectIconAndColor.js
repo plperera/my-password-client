@@ -7,9 +7,9 @@ import { useState } from "react";
 
 export default function SelectIconAndColor ({form, setForm}) {
 
-    const [ selectedIconName, setSelectedIconName ] = useState("RiLockPasswordFill") 
+    const [ selectedIconName, setSelectedIconName ] = useState(form?.iconName || "RiLockPasswordFill") 
     const [ selectedIcon, setSelectedIcon ] = useState(ICON_MAPPING[selectedIconName]) 
-    const [ selectedColor, setSelectedColor ] = useState("#0E5708") 
+    const [ selectedColor, setSelectedColor ] = useState(form?.color || "#0E5708") 
     const [ showCase, setShowCase ] = useState(undefined)
 
     useEffect(() => {

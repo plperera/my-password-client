@@ -17,90 +17,8 @@ export default function MyPasswords () {
     const [ showOverContainer, setShowOverContainer ] = useState(false)
     const [ passwordSelected, setPasswordSelected ] = useState(false)
     const [ passwordsData, setPasswordsData ] = useState(undefined)
+    const [ refresh, setRefresh ] = useState(0)
 
-    // const PasswordsData = [
-    //     {
-    //         name: "YouTube",
-    //         email: "pedro@email.com",
-    //         password: "1234567",
-    //         color: "#C75858",
-    //         icon: "MdMonitor",
-    //         passwordLevel: "",
-    //         ref: "https://www.youtube.com/",
-    //     },
-    //     {
-    //         name: "Notebook",
-    //         email: "pedro@email.com",
-    //         password: "1234567",
-    //         color: "#58ADC7",
-    //         icon: "MdComputer",
-    //         passwordLevel: "",
-    //         ref: "",
-    //     },
-    //     {
-    //         name: "gmail",
-    //         email: "pedro@email.com",
-    //         password: "1234567",
-    //         color: "#4E4E4E",
-    //         icon: "AiOutlineMail",
-    //         passwordLevel: "",
-    //         ref: "https://mail.google.com/mail/",
-    //     },
-    //     {
-    //         name: "Cartão Nubank",
-    //         email: "pedro@email.com",
-    //         password: "1234567",
-    //         color: "#9B58C7",
-    //         icon: "BsFillCreditCardFill",
-    //         passwordLevel: "",
-    //         ref: "",
-    //     },
-    //     {
-    //         name: "Cartão Inter",
-    //         email: "pedro@email.com",
-    //         password: "1234567",
-    //         color: "#C78A58",
-    //         icon: "AiFillCreditCard",
-    //         passwordLevel: "",
-    //         ref: "",
-    //     },
-    //     {
-    //         name: "CNH",
-    //         email: "pedro@email.com",
-    //         password: "1234567",
-    //         color: "#4E4E4E",
-    //         icon: "HiIdentification",
-    //         passwordLevel: "",
-    //         ref: "",
-    //     },
-    //     {
-    //         name: "Celular",
-    //         email: "pedro@email.com",
-    //         password: "1234567",
-    //         color: "#5863C7",
-    //         icon: "MdOutlinePhoneIphone",
-    //         passwordLevel: "",
-    //         ref: "99935-1124",
-    //     },
-    //     {
-    //         name: "Endereço",
-    //         email: "pedro@email.com",
-    //         password: "1234567",
-    //         color: "#C75895",
-    //         icon: "MdOutlineOtherHouses",
-    //         passwordLevel: "",
-    //         ref: "Apartamento",
-    //     },
-    //     {
-    //         name: "SnapChat",
-    //         email: "pedro@email.com",
-    //         password: "1234567",
-    //         color: "#DAA208",
-    //         icon: "RiLockPasswordFill",
-    //         passwordLevel: "",
-    //         ref: "https://www.snapchat.com/pt-BR",
-    //     },
-    // ];
     async function getAllItens(){
         try {
             const result = await api.GetAllItens(userData?.token)
@@ -115,11 +33,22 @@ export default function MyPasswords () {
     useEffect(() => {
         getAllItens()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [refresh])
     useEffect(() => {
         setResult(passwordsData)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [passwordsData])
+    function getType(item){
+        if (item?.ownerName){
+            return 'cartao'
+        }
+        if (item?.password){
+            return 'login'
+        }
+        if (item?.text){
+            return 'otherNotes'
+        }
+    }
 
     return(
         <Container>    
@@ -127,9 +56,20 @@ export default function MyPasswords () {
             <>
                 {showOverContainer === "showNewPassword" ? (<NewPassword setShowOverContainer={setShowOverContainer} token={userData?.token}/>):(<></>)}     
                 {showOverContainer === "showFilter" ? (<Filter setShowOverContainer={setShowOverContainer}/>):(<></>)}     
-                {showOverContainer === "showPasswordExpanded" ? (<PasswordExpanded setShowOverContainer={setShowOverContainer} setPasswordSelected={setPasswordSelected} passwordData={passwordSelected}/>):(<></>)}     
+                {showOverContainer === "showPasswordExpanded" ? (
+                    <PasswordExpanded  
+                        setShowOverContainer={setShowOverContainer} 
+                        setPasswordSelected={setPasswordSelected} 
+                        itemId={passwordSelected?.id} 
+                        itemType={getType(passwordSelected)} 
+                        token={userData?.token}
+                        refresh={refresh}
+                        setRefresh={setRefresh}
+                    />
+                    ):(<></>)
+                }     
                 <UpperContainer>
-                    <h1>{"Minhas Senhas"}</h1>
+                    <h1 onClick={() => setRefresh(refresh + 1)}>{"Minhas Senhas"}</h1>
                     <SearchBar/>
                 </UpperContainer>
 
@@ -139,7 +79,7 @@ export default function MyPasswords () {
                 </MiddleContainer>
 
                 <BottomContainer>
-                    {passwordsData ? (passwordsData?.map(e => <PasswordCard PasswordData={e} setShowOverContainer={setShowOverContainer} setPasswordSelected={setPasswordSelected}/>)):(<></>)}
+                    {passwordsData ? (passwordsData?.map(e => <PasswordCard passwordData={e} setShowOverContainer={setShowOverContainer} setPasswordSelected={setPasswordSelected}/>)):(<></>)}
                 </BottomContainer>
             </>
             ):(<></>)}

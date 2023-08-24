@@ -16,13 +16,28 @@ function GetAllItens(token) {
 function CreateNewItem({body, token}) {
     return axios.post(`${BASE_URL}/item`, body, {headers: { Authorization: `Bearer ${token}`}});
 }
+function UpdateNewItem({body, token}) {
+    return axios.put(`${BASE_URL}/item`, body, {headers: { Authorization: `Bearer ${token}`}});
+}
+function GetItemData({ query, token }) {
+    return axios.get(`${BASE_URL}/item/unique`, {
+        headers: { Authorization: `Bearer ${token}` },
+        params: query
+    });
+}
+function DeleteItem({body, token}) {
+    return axios.delete(`${BASE_URL}/item`, {headers: { Authorization: `Bearer ${token}`}, data: body});
+}
 
 const api = {
     CreateAccount,
     CreateSession,
     LogoutSession,
     GetAllItens,
-    CreateNewItem
+    CreateNewItem,
+    GetItemData,
+    UpdateNewItem,
+    DeleteItem
 };
 
 export default api;

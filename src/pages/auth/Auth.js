@@ -54,6 +54,10 @@ const BottomContainer = styled.div`
     display: flex;   
     background-color: #FCF5EC;
     justify-content: space-between;
+    @media (max-width: 850px) {
+        flex-direction: column;
+        min-height: 35vh;
+    }
 `
 const LeftContainer = styled.div`
     width: 50%;
@@ -64,6 +68,9 @@ const LeftContainer = styled.div`
     img {
         max-width: 100%;
         max-height: 65vh;
+    }
+    @media (max-width: 850px) {
+        display: none;
     }
 `
 const TextLeftContainer = styled.div`
@@ -85,5 +92,25 @@ const TextLeftContainer = styled.div`
         font-size: 20px;
         font-weight: 600;
         color: #052E1B;
+    }
+    @media (max-width: 1366px) {
+        width: 45%;
+        h1 {
+            width: 45%;
+            font-size: 28px;
+            line-height: 35px;
+        }
+        p {
+            font-size: 16px;
+        }
+    }
+    @media (max-width: 850px) {
+        width: 100%;
+        h1 {
+            width: 60%;
+        }
+        p {
+            width: 95%;
+        }
     }
 `
