@@ -4,16 +4,14 @@ import Filter from "./Filter"
 import PasswordCard from "./PasswordCard"
 import { useContext, useState } from "react"
 import { useEffect } from "react"
-import NewPassword from "./NewPassword/NewPassword"
-import PasswordExpanded from "./PasswordExpanded/PasswordExpanded"
+import NewPassword from "./NewPasswordModal/NewPassword"
+import PasswordExpanded from "./PasswordExpandedModal/PasswordExpanded"
 import UserContext from "../../../../context/UserContext"
-import { toast } from "react-toastify"
 import api from "../../../../services/API"
 import { useCustomForm } from "../../../../hooks/useCustomForms"
 
 export default function MyPasswords () {
 
-    const [ result, setResult ] = useState('')
     const { userData } = useContext(UserContext);
     const [ showOverContainer, setShowOverContainer ] = useState(false)
     const [ passwordSelected, setPasswordSelected ] = useState(false)
@@ -60,6 +58,7 @@ export default function MyPasswords () {
     //     setResult(itensData)
     // // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, [itensData])
+
     function getType(item){
         if (item?.ownerName){
             return 'cartao'
@@ -76,7 +75,11 @@ export default function MyPasswords () {
         <Container>    
             {itensData ? (
             <>
-                {showOverContainer === "showNewPassword" ? (<NewPassword setShowOverContainer={setShowOverContainer} token={userData?.token}/>):(<></>)}     
+                {showOverContainer === "showNewPassword" ? (
+                    <NewPassword 
+                        setShowOverContainer={setShowOverContainer} 
+                        token={userData?.token}
+                    />):(<></>)}     
                 {showOverContainer === "showFilter" ? (
                     <Filter 
                         setShowOverContainer={setShowOverContainer} 

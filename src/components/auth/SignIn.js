@@ -28,10 +28,10 @@ export default function SignIn ({setHasLogin}) {
                 return
             }       
         } catch (error) {
-            toast.error("Verifique os valores!!!")
             console.log(error)
         }
     }
+    
     return(
         <Container>
             <h1>{"WePass"}</h1>

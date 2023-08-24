@@ -24,7 +24,6 @@ const COLOR_MAPPING = {
     "black": "#000000",
     "grey": "#4E4E4E",
     "grey2": "#A7A7A7",
-
 };
 
 export default COLOR_MAPPING

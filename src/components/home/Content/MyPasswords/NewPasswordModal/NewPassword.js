@@ -9,6 +9,7 @@ import PasswordValidation from "./PasswordValidation";
 import InformationType from "./InformationType";
 import Button from "../../../../../common/form/Button";
 import api from "../../../../../services/API";
+import { toast } from "react-toastify";
 
 export default function NewPassword ({setShowOverContainer, token}) {
     const [form, handleForm, setForm] = useCustomForm()
@@ -58,8 +59,9 @@ export default function NewPassword ({setShowOverContainer, token}) {
             console.log(body)
             const result = await api.CreateNewItem({token, body})
             console.log(result)
-            if (result.status === 200){
-                //setShowPassword(false)
+            if (result.status === 201){
+                toast.dark("Credencial salva com Sucesso")
+                setShowOverContainer(false)
             }
         } catch (error) {
             console.log(error)
@@ -117,7 +119,7 @@ export default function NewPassword ({setShowOverContainer, token}) {
                                 value={form?.password}
                             />
 
-                            <PasswordIconContainer>
+                            <PasswordIconContainer onClick={ () => setShowPassword(!showPassword)}>
                                 {showPassword ? (<BsFillEyeSlashFill/>):(<BsFillEyeFill/>)}
                             </PasswordIconContainer>
 

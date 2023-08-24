@@ -8,10 +8,10 @@ import { useState } from "react";
 import { useEffect } from "react";
 import ICON_MAPPING from "../../../../../common/icons/iconsObj";
 import api from "../../../../../services/API";
-import PasswordValidation from "../NewPassword/PasswordValidation";
+import PasswordValidation from "../NewPasswordModal/PasswordValidation";
 import { BsFillEyeFill, BsFillEyeSlashFill, BsFillTrashFill } from 'react-icons/bs';
 import { toast } from "react-toastify";
-import SelectIconAndColor from "../NewPassword/SelectIconAndColor";
+import SelectIconAndColor from "../NewPasswordModal/SelectIconAndColor";
 
 export default function PasswordExpanded ({setShowOverContainer, itemId, itemType, setPasswordSelected, token, refresh, setRefresh}) {
     const [ form, handleForm, setForm ] = useCustomForm()
@@ -124,7 +124,7 @@ export default function PasswordExpanded ({setShowOverContainer, itemId, itemTyp
                 ref: form?.ref || " ",
                 email: form?.email,
                 password: form?.password, 
-                passwordStrongLevel: form?.strongLevel, 
+                passwordStrongLevel: form?.strongLevel?.toLowerCase(), 
                 type: (form?.type.toLowerCase()),
                 color: form?.color,
                 iconName: form?.iconName
