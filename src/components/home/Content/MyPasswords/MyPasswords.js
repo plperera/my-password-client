@@ -103,11 +103,12 @@ export default function MyPasswords () {
     // ];
     async function getAllItens(){
         try {
-            
-            const result = api.getAllItens()
-
+            const result = await api.GetAllItens(userData?.token)
+            console.log(result)
+            if (result.status === 200){
+                setPasswordsData(result.data)
+            }
         } catch (error) {
-            toast.error("Aconteceu alguma coisa :(")
             console.log(error)
         }
     }
@@ -124,7 +125,7 @@ export default function MyPasswords () {
         <Container>    
             {passwordsData ? (
             <>
-                {showOverContainer === "showNewPassword" ? (<NewPassword setShowOverContainer={setShowOverContainer}/>):(<></>)}     
+                {showOverContainer === "showNewPassword" ? (<NewPassword setShowOverContainer={setShowOverContainer} token={userData?.token}/>):(<></>)}     
                 {showOverContainer === "showFilter" ? (<Filter setShowOverContainer={setShowOverContainer}/>):(<></>)}     
                 {showOverContainer === "showPasswordExpanded" ? (<PasswordExpanded setShowOverContainer={setShowOverContainer} setPasswordSelected={setPasswordSelected} passwordData={passwordSelected}/>):(<></>)}     
                 <UpperContainer>

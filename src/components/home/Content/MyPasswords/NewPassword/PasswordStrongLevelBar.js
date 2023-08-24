@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useState } from "react"
 import styled from "styled-components"
 
-export default function PasswordStrongLevelBar ({validation}) {
+export default function PasswordStrongLevelBar ({validation, setForm, form}) {
 
     const levelRef = {
         0: {
@@ -39,6 +39,7 @@ export default function PasswordStrongLevelBar ({validation}) {
                 cont++
             }
         });
+        setForm({...form, strongLevel: levelRef[cont].strongLevel})
         setProgressLevel(cont)
     }
 

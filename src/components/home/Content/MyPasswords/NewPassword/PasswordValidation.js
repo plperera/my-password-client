@@ -2,10 +2,10 @@ import styled from "styled-components"
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
 import PasswordStrongLevelBar from "./PasswordStrongLevelBar";
 
-export default function PasswordValidation ({validation}) {
+export default function PasswordValidation ({validation, setForm, form}) {
     return(
         <Container>
-            <PasswordStrongLevelBar validation={validation}/>
+            <PasswordStrongLevelBar validation={validation} setForm={setForm} form={form}/>
             <PasswordValidationLine isValid={validation?.hasSpecialCharacter}>
                 {validation?.hasSpecialCharacter ? (<StyledCheck/>):(<StyledUnCheck/>)}
                 <h3>{"A senha deve conter pelo menos um caractere especial. (!@#$%^&*()-+)"}</h3>

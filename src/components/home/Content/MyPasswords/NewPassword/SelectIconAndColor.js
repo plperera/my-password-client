@@ -8,14 +8,14 @@ import { useState } from "react";
 export default function SelectIconAndColor ({form, setForm}) {
 
     const [ selectedIconName, setSelectedIconName ] = useState("RiLockPasswordFill") 
-    const [ selectedIcon, setSelectedIcon ] = useState("RiLockPasswordFill") 
+    const [ selectedIcon, setSelectedIcon ] = useState(ICON_MAPPING[selectedIconName]) 
     const [ selectedColor, setSelectedColor ] = useState("#0E5708") 
     const [ showCase, setShowCase ] = useState(undefined)
 
     useEffect(() => {
-        setForm({...form, color: selectedColor, icon: selectedIconName})
+        setForm({...form, color: selectedColor, iconName: selectedIconName})
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedColor, selectedIconName, form?.type])
+    }, [selectedColor, selectedIconName, form?.name])
 
     useEffect(() => {
         setSelectedIcon(ICON_MAPPING[selectedIconName])

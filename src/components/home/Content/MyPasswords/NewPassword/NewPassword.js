@@ -8,8 +8,9 @@ import { useEffect } from "react";
 import PasswordValidation from "./PasswordValidation";
 import InformationType from "./InformationType";
 import Button from "../../../../../common/form/Button";
+import api from "../../../../../services/API";
 
-export default function NewPassword ({setShowOverContainer}) {
+export default function NewPassword ({setShowOverContainer, token}) {
     const [form, handleForm, setForm] = useCustomForm()
     const [ showPassword, setShowPassword ] = useState(false)
 
@@ -40,6 +41,29 @@ export default function NewPassword ({setShowOverContainer}) {
             hasSpecialCharacter
         })
           
+    }
+
+    async function submitForms(){
+        try {
+            const body = {
+                name: form?.name,
+                ref: form?.ref,
+                email: form?.email,
+                password: form?.password,
+                passwordStrongLevel: form?.strongLevel,
+                type: (form?.type.toLowerCase()),
+                color: form?.color,
+                iconName: form?.iconName
+            }
+            console.log(body)
+            const result = await api.CreateNewItem({token, body})
+            console.log(result)
+            if (result.status === 200){
+                //setShowPassword(false)
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -93,11 +117,11 @@ export default function NewPassword ({setShowOverContainer}) {
                                 value={form?.password}
                             />
 
-                            <PasswordIconContainer onClick={() => setShowPassword(!showPassword)}>
+                            <PasswordIconContainer>
                                 {showPassword ? (<BsFillEyeSlashFill/>):(<BsFillEyeFill/>)}
                             </PasswordIconContainer>
 
-                            <PasswordValidation validation={validation}/>
+                            <PasswordValidation validation={validation} setForm={setForm} form={form}/>
                         </>
                     ):(
                         form?.type === "Cartão" ? (
@@ -178,14 +202,13 @@ export default function NewPassword ({setShowOverContainer}) {
                         )
                     )}
 
-                    
-
                     <ButtonContainer>
                         <Button 
                             width={"100%"} 
                             height={"55px"}
                             background={"#d4ed6cff !important"}
                             backgroundhover={"#C4ED6C !important"}
+                            onClick={() => submitForms()}
                         >{"Criar"}</Button>
                     </ButtonContainer>
 

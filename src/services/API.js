@@ -1,6 +1,6 @@
 import axios from 'axios';
 const BASE_URL = process.env.REACT_APP_BACK_END_URL;
-console.log(BASE_URL)
+
 function CreateAccount(body) {
     return axios.post(`${BASE_URL}/auth/sign-up`, body);
 }
@@ -10,15 +10,19 @@ function CreateSession(body) {
 function LogoutSession(body) {
     return axios.delete(`${BASE_URL}/auth/sign-in`, body);
 }
-function GetAllItens(body) {
-    return axios.delete(`${BASE_URL}/item`, body);
+function GetAllItens(token) {
+    return axios.get(`${BASE_URL}/item`, {headers: { Authorization: `Bearer ${token}`}});
+}
+function CreateNewItem({body, token}) {
+    return axios.post(`${BASE_URL}/item`, body, {headers: { Authorization: `Bearer ${token}`}});
 }
 
 const api = {
     CreateAccount,
     CreateSession,
     LogoutSession,
-    GetAllItens
+    GetAllItens,
+    CreateNewItem
 };
 
 export default api;
