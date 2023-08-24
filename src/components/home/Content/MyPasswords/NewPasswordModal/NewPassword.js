@@ -1,61 +1,81 @@
 import styled from "styled-components"
 import { AiOutlineClose } from 'react-icons/ai';
-import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { useCustomForm } from "../../../../../hooks/useCustomForms";
-import InputDark from "../../../../../common/form/InputDark";
-import { useState } from "react";
 import { useEffect } from "react";
-import PasswordValidation from "./PasswordValidation";
 import InformationType from "./InformationType";
 import Button from "../../../../../common/form/Button";
 import api from "../../../../../services/API";
 import { toast } from "react-toastify";
+import CardInputs from "../../../inputs/CardInputs";
+import LoginInput from "../../../inputs/LoginInputs";
+import OtherNotesInputs from "../../../inputs/OtherNotesInputs";
 
 export default function NewPassword ({setShowOverContainer, token}) {
     const [form, handleForm, setForm] = useCustomForm()
-    const [ showPassword, setShowPassword ] = useState(false)
-
-    const [ validation, setValidation ] = useState({
-        minLength: false,
-        hasDigit: false,
-        hasLowercase: false,
-        hasUppercase: false,
-        hasSpecialCharacter: false
-    })
 
     useEffect(() => {
         console.log(form)
     }, [form])
 
-    function handleValidation(){
-        const minLength = form?.password?.length >= 6;
-        const hasDigit = /[0-9]/.test(form?.password);
-        const hasLowercase = /[a-z]/.test(form?.password);
-        const hasUppercase = /[A-Z]/.test(form?.password);
-        const hasSpecialCharacter = /[!@#$%^&*()\-+]/.test(form?.password);
-
-        setValidation({
-            minLength,
-            hasDigit,
-            hasLowercase,
-            hasUppercase,
-            hasSpecialCharacter
-        })
-          
+    const formsObj = {
+        Cartão: <CardInputs handleForm={handleForm} form={form} setForm={setForm}/>,
+        Login: <LoginInput handleForm={handleForm} form={form} setForm={setForm}/>,
+        Outro: <OtherNotesInputs handleForm={handleForm} form={form} setForm={setForm}/>,
+    }
+    function formatType(type){
+        const typeList = {
+            Cartão: "card",
+            Login: "login",
+            Outro: "other",
+        }
+        return typeList[type]
+    }
+    function formatBody({type, obj}){
+        if (type === "Cartão"){
+            const body = {
+                type: formatType(type),
+                name: obj?.name,
+                ownerName: obj?.ownerName,
+                number: obj?.number,
+                password: obj?.password,
+                securityCode: obj?.securityCode,
+                expirationDate: obj?.expirationDate,
+                iconName: obj?.iconName,
+                issuer: "visa",
+                color: obj?.color
+            }
+            return body
+        }
+        if (type === "Login"){
+            const body = {
+                type: formatType(type),
+                name: obj?.name,
+                ref: obj?.ref,
+                email: obj?.email,
+                password: obj?.password,
+                passwordStrongLevel: obj?.strongLevel,
+                color: obj?.color,
+                iconName: obj?.iconName
+            }
+            return body
+        }
+        if (type === "Outro"){
+            const body = {
+                type: formatType(type),
+                name: obj?.name,
+                text: obj?.text,
+                iconName: obj?.iconName,
+                color: obj?.color,
+            }
+            return body
+        }
+        
+        return {}
     }
 
     async function submitForms(){
         try {
-            const body = {
-                name: form?.name,
-                ref: form?.ref,
-                email: form?.email,
-                password: form?.password,
-                passwordStrongLevel: form?.strongLevel,
-                type: (form?.type.toLowerCase()),
-                color: form?.color,
-                iconName: form?.iconName
-            }
+            const body = formatBody({type: form?.type, obj: form})
             console.log(body)
             const result = await api.CreateNewItem({token, body})
             console.log(result)
@@ -68,8 +88,7 @@ export default function NewPassword ({setShowOverContainer, token}) {
         }
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(() => {handleValidation()}, [form?.password])
+    
 
     return(
         <Container>
@@ -84,125 +103,7 @@ export default function NewPassword ({setShowOverContainer, token}) {
 
                     <InformationType setForm={setForm} form={form}/>
 
-                    {form?.type === "Login" ? (
-                        <>
-                            <InputDark 
-                            label="Nome / Apelido"     
-                            type="text" 
-                            name={"name"} 
-                            width="80%"
-                            onChange={handleForm}
-                            value={form?.name}
-                            />
-                            <InputDark 
-                                label="Link / Referência"     
-                                type="text" 
-                                name={"ref"} 
-                                width="80%"
-                                onChange={handleForm}
-                                value={form?.ref}
-                            />
-                            <InputDark 
-                                label="Email"     
-                                type="text" 
-                                name={"email"} 
-                                width="80%"
-                                onChange={handleForm}
-                                value={form?.email}
-                            />
-                            <InputDark 
-                                label="Senha"     
-                                type={showPassword ? ("text"):("password")} 
-                                name={"password"} 
-                                width="80%"
-                                onChange={handleForm}
-                                value={form?.password}
-                            />
-
-                            <PasswordIconContainer onClick={ () => setShowPassword(!showPassword)}>
-                                {showPassword ? (<BsFillEyeSlashFill/>):(<BsFillEyeFill/>)}
-                            </PasswordIconContainer>
-
-                            <PasswordValidation validation={validation} setForm={setForm} form={form}/>
-                        </>
-                    ):(
-                        form?.type === "Cartão" ? (
-                            <>
-                                <InputDark 
-                                label="Nome / Apelido / Título"     
-                                type="text" 
-                                name={"name"} 
-                                width="80%"
-                                onChange={handleForm}
-                                value={form?.name}
-                                />
-                                <InputDark 
-                                    label="Nome Impresso no Cartão"     
-                                    type="text" 
-                                    name={"cardOwner"} 
-                                    width="80%"
-                                    onChange={handleForm}
-                                    value={form?.cardOwner}
-                                />
-                                <InputDark 
-                                    label="Número do Cartão"     
-                                    type="text" 
-                                    name={"cardNumber"} 
-                                    width="80%"
-                                    onChange={handleForm}
-                                    value={form?.cardNumber}
-                                />
-                                <InputDark 
-                                    label="Senha do Cartão"     
-                                    type={showPassword ? ("text"):("password")} 
-                                    name={"cardPassword"} 
-                                    width="80%"
-                                    onChange={handleForm}
-                                    value={form?.cardPassword}
-                                />
-                                <InputDark 
-                                    label="CVC / Código de Segurança"     
-                                    type="text" 
-                                    name={"cvc"} 
-                                    width="80%"
-                                    onChange={handleForm}
-                                    value={form?.cvc}
-                                />
-                                <InputDark 
-                                    label="Data de Expiração"     
-                                    type="text" 
-                                    name={"expirationDate"} 
-                                    width="80%"
-                                    onChange={handleForm}
-                                    value={form?.expirationDate}
-                                />
-
-                                <PasswordIconContainer onClick={() => setShowPassword(!showPassword)}>
-                                    {showPassword ? (<BsFillEyeSlashFill/>):(<BsFillEyeFill/>)}
-                                </PasswordIconContainer>
-
-                            </>
-                        ):(
-                            <>
-                                <InputDark 
-                                label="Nome / Apelido / Título"     
-                                type="text" 
-                                name={"name"} 
-                                width="80%"
-                                onChange={handleForm}
-                                value={form?.name}
-                                />
-                                <InputDark 
-                                    label="Anotação"     
-                                    type="text" 
-                                    name={"note"} 
-                                    width="80%"
-                                    onChange={handleForm}
-                                    value={form?.note}
-                                />
-                            </>
-                        )
-                    )}
+                    {formsObj[form?.type]}
 
                     <ButtonContainer>
                         <Button 
@@ -270,17 +171,6 @@ const MiddleContainer = styled.div`
     padding-top: 2vh;
     row-gap: 1.4vh;
     padding-bottom: 50px;
-`
-const PasswordIconContainer = styled.div`
-    position: absolute;
-    top: 42vh;
-    right: 31vw;
-    color: #052E1B;
-    cursor: pointer;
-    svg {
-        font-size: 30px;
-        user-select: none;
-    }
 `
 const ButtonContainer = styled.div`
     width: 80%;
