@@ -10,7 +10,7 @@ import CardInputs from "../../../inputs/CardInputs";
 import LoginInput from "../../../inputs/LoginInputs";
 import OtherNotesInputs from "../../../inputs/OtherNotesInputs";
 
-export default function NewPassword ({setShowOverContainer, token}) {
+export default function NewPassword ({setShowOverContainer, token, setRefresh, refresh}) {
     const [form, handleForm, setForm] = useCustomForm()
 
     useEffect(() => {
@@ -85,6 +85,7 @@ export default function NewPassword ({setShowOverContainer, token}) {
             console.log(result)
             if (result.status === 201){
                 toast.dark("Credencial salva com Sucesso")
+                setRefresh(refresh + 1)
                 setShowOverContainer(false)
             }
         } catch (error) {

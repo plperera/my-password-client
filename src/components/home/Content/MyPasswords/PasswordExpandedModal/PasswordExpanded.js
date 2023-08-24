@@ -82,26 +82,6 @@ export default function PasswordExpanded ({setShowOverContainer, itemId, itemTyp
         })
           
     }
-
-    useEffect(() => {
-        getItemData()
-    }, [refresh])
-
-    useEffect(() => {
-        setForm({
-            name: itemData?.name,
-            ref: itemData?.ref,
-            email: itemData?.email,
-            password: itemData?.password,
-            strongLevel: itemData?.passwordStrongLevel,
-            type: itemType,
-            color: itemData?.color,
-            iconName: itemData?.iconName
-        })
-    }, [itemData])
-
-    useEffect(() => {handleValidation()}, [form?.password])
-
     async function handleCopy({value, key}){
 
         if (isloading) return
@@ -118,7 +98,6 @@ export default function PasswordExpanded ({setShowOverContainer, itemId, itemTyp
         console.error('Erro ao copiar o texto: ', err);
         }      
     }
-
     function handleButton(){
 
         if (editMode) {
@@ -157,17 +136,38 @@ export default function PasswordExpanded ({setShowOverContainer, itemId, itemTyp
         try {
             const body = {                
                 itemId: itemData?.id,
-                type: (form?.type.toLowerCase()),
+                type: formatType(itemType),
             }
             const result = await api.DeleteItem({body, token})
             if (result.status === 200){
                 toast.dark("Item removido com Sucesso")
+                setRefresh(refresh + 1) 
                 setShowOverContainer(false)
             }
         } catch (error) {
             console.log(error)
         }
     }
+    useEffect(() => {
+        getItemData()
+    }, [refresh])
+
+    useEffect(() => {
+        setForm({
+            name: itemData?.name,
+            ref: itemData?.ref,
+            email: itemData?.email,
+            password: itemData?.password,
+            strongLevel: itemData?.passwordStrongLevel,
+            type: itemType,
+            color: itemData?.color,
+            iconName: itemData?.iconName
+        })
+    }, [itemData])
+
+    useEffect(() => {handleValidation()}, [form?.password])
+
+    
     
     return(
         <Container>

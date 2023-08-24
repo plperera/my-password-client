@@ -79,6 +79,8 @@ export default function MyPasswords () {
                     <NewPassword 
                         setShowOverContainer={setShowOverContainer} 
                         token={userData?.token}
+                        refresh={refresh}
+                        setRefresh={setRefresh}
                     />):(<></>)}     
                 {showOverContainer === "showFilter" ? (
                     <Filter 
