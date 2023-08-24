@@ -2,10 +2,31 @@ import styled from "styled-components"
 import Input from "../../common/form/Input"
 import Button from "../../common/form/Button"
 import { useCustomForm } from "../../hooks/useCustomForms"
+import api from "../../services/API"
+import { toast } from "react-toastify"
 
 export default function SignUp ({setHasLogin}) {
 
     const [form, handleForm] = useCustomForm()
+
+    async function submitForms(){
+        try {
+            const body = {
+                name: form?.name,
+                email: form?.email,
+                password: form?.password,
+                passwordVerify: form?.passwordVerify
+            }
+            const result = await api.CreateAccount(body)
+            if (result.status === 201){
+                toast.dark("Cadastro realizado com sucesso!")
+                setHasLogin(true)
+            }
+            console.log(result)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return(
         <Container>
@@ -52,6 +73,7 @@ export default function SignUp ({setHasLogin}) {
                     height={"55px"}
                     background={"#d4ed6cff !important"}
                     backgroundhover={"#C4ED6C !important"}
+                    onClick={() => submitForms()}
                 >{"Criar"}</Button>
             </ButtonContainer>
             <ButtonSignUp onClick={() => setHasLogin(true)}>{"Já tem um Login? Entrar!!"}</ButtonSignUp>

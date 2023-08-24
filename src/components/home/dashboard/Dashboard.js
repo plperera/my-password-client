@@ -1,10 +1,10 @@
 import styled from "styled-components"
 
-export default function Dashboard ({OptionsObjArray, selected, setSelected}) {
+export default function Dashboard ({OptionsObjArray, selected, setSelected, userData}) {
 
     return(
         <Container>          
-            <h1>{"Olá, Pedro"}</h1>
+            <h1>{`Olá, ${userData?.name}`}</h1>
             <OptionsContainer>
 
                 {

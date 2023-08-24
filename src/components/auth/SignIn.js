@@ -2,11 +2,36 @@ import styled from "styled-components"
 import Input from "../../common/form/Input"
 import Button from "../../common/form/Button"
 import { useCustomForm } from "../../hooks/useCustomForms"
+import { toast } from "react-toastify"
+import api from "../../services/API"
+import UserContext from "../../context/UserContext"
+import { useContext } from "react"
+import useNavigateAndMoveUp from "../../hooks/useNavigateAndMoveUp"
 
 export default function SignIn ({setHasLogin}) {
 
     const [form, handleForm] = useCustomForm()
+    const { setUserData } = useContext(UserContext);
+    const navigateAndMoveUp = useNavigateAndMoveUp();
 
+    async function submitForms(){
+        try {
+            const body = {
+                email: form?.email,
+                password: form?.password,
+            }
+            const result = await api.CreateSession(body)
+            if (result.status === 200){
+                setUserData(result.data)
+                toast.dark("Login realizado com sucesso!")
+                navigateAndMoveUp({locate: ""})
+                return
+            }       
+        } catch (error) {
+            toast.error("Verifique os valores!!!")
+            console.log(error)
+        }
+    }
     return(
         <Container>
             <h1>{"WePass"}</h1>
@@ -35,6 +60,7 @@ export default function SignIn ({setHasLogin}) {
                     height={"55px"}
                     background={"#d4ed6cff !important"}
                     backgroundhover={"#C4ED6C !important"}
+                    onClick={() => submitForms()}
                 >{"Entrar"}</Button>
             </ButtonContainer>
             
