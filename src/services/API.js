@@ -28,6 +28,12 @@ function GetItemData({ query, token }) {
 function DeleteItem({body, token}) {
     return axios.delete(`${BASE_URL}/item`, {headers: { Authorization: `Bearer ${token}`}, data: body});
 }
+function GetAllItemDataWithFilter({ query, token }) {
+    return axios.get(`${BASE_URL}/item/filter`, {
+        headers: { Authorization: `Bearer ${token}` },
+        params: query
+    });
+}
 
 const api = {
     CreateAccount,
@@ -37,7 +43,8 @@ const api = {
     CreateNewItem,
     GetItemData,
     UpdateNewItem,
-    DeleteItem
+    DeleteItem,
+    GetAllItemDataWithFilter
 };
 
 export default api;

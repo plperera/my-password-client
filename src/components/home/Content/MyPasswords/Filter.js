@@ -1,16 +1,46 @@
 import styled from "styled-components"
 import { AiOutlineClose } from 'react-icons/ai';
 import Button from "../../../../common/form/Button";
-import { useCustomForm } from "../../../../hooks/useCustomForms";
+import api from "../../../../services/API";
+import { toast } from "react-toastify";
 
-export default function Filter ({setShowOverContainer}) {
-    const [form, handleForm] = useCustomForm()
+
+export default function Filter ({setShowOverContainer, token, setFilteredItensData, form, handleForm}) {
+    async function getFilteredItens(){
+        console.log(form)
+        try {
+            
+            const orderBy = form?.orderBy?.replace(/ /g, "")
+            const orderByRef = {
+                MaisRecentes: "orderByUpdatedAtDesc",
+                MaisAntigos: "orderByUpdatedAtAsc",
+                SenhasmaisFortes: "orderByPasswordStrongLeverAsc",
+                SenhasmaisFRACAS: "orderByPasswordStrongLeverDesc"
+            }
+            const body = {
+                includes: form?.typeFilter?.toLowerCase(),
+                orderBy: orderByRef[orderBy] 
+            }
+            const result = await api.GetAllItemDataWithFilter({query: body, token})
+
+            if(result.status === 200) {
+                
+                setFilteredItensData(result.data)
+                setShowOverContainer(false)
+                toast.dark("Filtro Aplicado!")
+            }
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
     return(
         <Container>
             <SubContainer>
 
                 <UpperContainer>
-                    <h1>{"Filtrar"}</h1>
+                    <h1 onClick={() => console.log(form)}>{"Filtrar"}</h1>
                     <AiOutlineClose onClick={() => setShowOverContainer(false)}/>
                 </UpperContainer>
 
@@ -53,6 +83,7 @@ export default function Filter ({setShowOverContainer}) {
                             height={"55px"}
                             background={"#d4ed6cff !important"}
                             backgroundhover={"#C4ED6C !important"}
+                            onClick={() => getFilteredItens()}
                         >{"Filtrar"}</Button>
                     </ButtonContainer>
                 </MiddleContainer>

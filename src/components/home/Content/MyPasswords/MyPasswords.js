@@ -9,6 +9,7 @@ import PasswordExpanded from "./PasswordExpanded/PasswordExpanded"
 import UserContext from "../../../../context/UserContext"
 import { toast } from "react-toastify"
 import api from "../../../../services/API"
+import { useCustomForm } from "../../../../hooks/useCustomForms"
 
 export default function MyPasswords () {
 
@@ -16,28 +17,49 @@ export default function MyPasswords () {
     const { userData } = useContext(UserContext);
     const [ showOverContainer, setShowOverContainer ] = useState(false)
     const [ passwordSelected, setPasswordSelected ] = useState(false)
-    const [ passwordsData, setPasswordsData ] = useState(undefined)
+    const [ itensData, setItensData ] = useState(undefined)
+    const [ filteredItensData, setFilteredItensData ] = useState(undefined)
     const [ refresh, setRefresh ] = useState(0)
+    const [form, handleForm] = useCustomForm({
+        orderBy: "Mais Recentes",
+        typeFilter: "Login",
+    })
 
     async function getAllItens(){
         try {
             const result = await api.GetAllItens(userData?.token)
             console.log(result)
             if (result.status === 200){
-                setPasswordsData(result.data)
+                setItensData(result.data)
             }
         } catch (error) {
             console.log(error)
         }
     }
+    
+    useEffect(() => {
+        if(filteredItensData){
+
+            return
+        }
+        getAllItens()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [refresh])
+
     useEffect(() => {
         getAllItens()
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refresh])
+
     useEffect(() => {
-        setResult(passwordsData)
+        setItensData(filteredItensData)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [passwordsData])
+    }, [filteredItensData])
+
+    // useEffect(() => {
+    //     setResult(itensData)
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [itensData])
     function getType(item){
         if (item?.ownerName){
             return 'cartao'
@@ -52,10 +74,18 @@ export default function MyPasswords () {
 
     return(
         <Container>    
-            {passwordsData ? (
+            {itensData ? (
             <>
                 {showOverContainer === "showNewPassword" ? (<NewPassword setShowOverContainer={setShowOverContainer} token={userData?.token}/>):(<></>)}     
-                {showOverContainer === "showFilter" ? (<Filter setShowOverContainer={setShowOverContainer}/>):(<></>)}     
+                {showOverContainer === "showFilter" ? (
+                    <Filter 
+                        setShowOverContainer={setShowOverContainer} 
+                        token={userData?.token} 
+                        filteredItensData={filteredItensData} 
+                        setFilteredItensData={setFilteredItensData}
+                        form={form}
+                        handleForm={handleForm}
+                    />):(<></>)}     
                 {showOverContainer === "showPasswordExpanded" ? (
                     <PasswordExpanded  
                         setShowOverContainer={setShowOverContainer} 
@@ -79,7 +109,7 @@ export default function MyPasswords () {
                 </MiddleContainer>
 
                 <BottomContainer>
-                    {passwordsData ? (passwordsData?.map(e => <PasswordCard passwordData={e} setShowOverContainer={setShowOverContainer} setPasswordSelected={setPasswordSelected}/>)):(<></>)}
+                    {itensData ? (itensData?.map(e => <PasswordCard passwordData={e} setShowOverContainer={setShowOverContainer} setPasswordSelected={setPasswordSelected}/>)):(<></>)}
                 </BottomContainer>
             </>
             ):(<></>)}
