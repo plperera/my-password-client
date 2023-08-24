@@ -1,41 +1,27 @@
 import styled from "styled-components"
-import { AiOutlineClose, AiOutlineCopy } from 'react-icons/ai';
-import { BsCheck } from 'react-icons/bs';
+import { AiOutlineClose } from 'react-icons/ai';
 import Button from "../../../../../common/form/Button";
-import InputDark from "../../../../../common/form/InputDark";
 import { useCustomForm } from "../../../../../hooks/useCustomForms";
 import { useState } from "react";
 import { useEffect } from "react";
-import ICON_MAPPING from "../../../../../common/icons/iconsObj";
 import api from "../../../../../services/API";
-import PasswordValidation from "../NewPasswordModal/PasswordValidation";
-import { BsFillEyeFill, BsFillEyeSlashFill, BsFillTrashFill } from 'react-icons/bs';
+import { BsFillTrashFill } from 'react-icons/bs';
 import { toast } from "react-toastify";
-import SelectIconAndColor from "../NewPasswordModal/SelectIconAndColor";
+import CopyLoginInputs from "../../../inputs/CopyLoginInputs";
+import CopyCardInputs from "../../../inputs/CopyCardInputs";
+import CopyOtherNotesInputs from "../../../inputs/CopyOtherNotesInputs";
 
 export default function PasswordExpanded ({setShowOverContainer, itemId, itemType, setPasswordSelected, token, refresh, setRefresh}) {
     const [ form, handleForm, setForm ] = useCustomForm()
-    const [ showPassword, setShowPassword ] = useState(false)
     const [ itemData, setItemData ] = useState(false)
-    const [ isloading, setIsloading ] = useState(false)
     const [ editMode, setEditMode ] = useState(false)
-    const [ isCopied, setIsCopied ] = useState(
-        {
-            name: false,
-            ref: false,
-            email: false,
-            password: false,
-        }
-    );
-    const [ validation, setValidation ] = useState({
-        minLength: false,
-        hasDigit: false,
-        hasLowercase: false,
-        hasUppercase: false,
-        hasSpecialCharacter: false
-    })
 
-    const IconComponent = ICON_MAPPING[itemData?.iconName]
+    const formsObj = {
+        card: <CopyCardInputs editMode={editMode} form={form} handleForm={handleForm} setForm={setForm} itemData={itemData}/>,
+        login: <CopyLoginInputs editMode={editMode} form={form} handleForm={handleForm} setForm={setForm} itemData={itemData}/>,
+        other: <CopyOtherNotesInputs editMode={editMode} form={form} handleForm={handleForm} setForm={setForm} itemData={itemData}/>
+    }
+    
     function formatType(type){
         const typeList = {
             Cartão: "card",
@@ -65,39 +51,6 @@ export default function PasswordExpanded ({setShowOverContainer, itemId, itemTyp
             console.log(error)
         }
     }
-
-    function handleValidation(){
-        const minLength = form?.password?.length >= 6;
-        const hasDigit = /[0-9]/.test(form?.password);
-        const hasLowercase = /[a-z]/.test(form?.password);
-        const hasUppercase = /[A-Z]/.test(form?.password);
-        const hasSpecialCharacter = /[!@#$%^&*()\-+]/.test(form?.password);
-
-        setValidation({
-            minLength,
-            hasDigit,
-            hasLowercase,
-            hasUppercase,
-            hasSpecialCharacter
-        })
-          
-    }
-    async function handleCopy({value, key}){
-
-        if (isloading) return
-
-        try {
-            setIsloading(true)
-            await navigator.clipboard.writeText(value); 
-            setIsCopied({...isCopied, [key]: true});
-            setTimeout(() => {
-                setIsCopied({...isCopied, [key]: false})
-                setIsloading(false)
-            }, 800); 
-        } catch (err) {
-        console.error('Erro ao copiar o texto: ', err);
-        }      
-    }
     function handleButton(){
 
         if (editMode) {
@@ -107,19 +60,50 @@ export default function PasswordExpanded ({setShowOverContainer, itemId, itemTyp
         setEditMode(true)
         return
     }
+    function inicializeValuesByType(){
+        const formatedType = formatType(itemType)
+        if (formatedType === "card"){
+            const body = {
+                type: formatedType,
+                name: itemData?.name,
+                ownerName: itemData?.ownerName,
+                number: itemData?.number,
+                password: itemData?.password,
+                securityCode: itemData?.securityCode,
+                expirationDate: itemData?.expirationDate,
+                iconName: itemData?.iconName,
+                issuer: itemData.issuer,
+                color: itemData?.color
+            }
+            return body
+        }
+        if (formatedType === "login"){
+            const body = {
+                type: formatedType,
+                name: itemData?.name,
+                ref: itemData?.ref,
+                email: itemData?.email,
+                password: itemData?.password,
+                passwordStrongLevel: itemData?.strongLevel,
+                color: itemData?.color,
+                iconName: itemData?.iconName
+            }
+            return body
+        }
+        if (formatedType === "other"){
+            const body = {
+                type: formatedType,
+                name: itemData?.name,
+                text: itemData?.text,
+                iconName: itemData?.iconName,
+                color: itemData?.color,
+            }
+            return body
+        }
+    }
     async function submitForm(){
         try {
-            const body = {
-                itemId: itemData?.id,
-                name: form?.name,
-                ref: form?.ref || " ",
-                email: form?.email,
-                password: form?.password, 
-                passwordStrongLevel: form?.strongLevel?.toLowerCase(), 
-                type: (form?.type.toLowerCase()),
-                color: form?.color,
-                iconName: form?.iconName
-            }
+            const body = formatBody({type: formatType(itemType), obj: form})
             console.log(form)
             const result = await api.UpdateNewItem({body, token})
             if (result.status === 200){
@@ -148,27 +132,60 @@ export default function PasswordExpanded ({setShowOverContainer, itemId, itemTyp
             console.log(error)
         }
     }
+    function formatBody({type, obj}){
+        if (type === "card"){
+            const body = {
+                itemId: itemData.id,
+                type: type,
+                name: obj?.name,
+                ownerName: obj?.ownerName,
+                number: obj?.number,
+                password: obj?.password,
+                securityCode: obj?.securityCode,
+                expirationDate: obj?.expirationDate,
+                iconName: obj?.iconName,
+                issuer: "visa",
+                color: obj?.color
+            }
+            return body
+        }
+        if (type === "login"){
+            const body = {
+                itemId: itemData.id,
+                type: type,
+                name: obj?.name,
+                ref: obj?.ref,
+                email: obj?.email,
+                password: obj?.password,
+                passwordStrongLevel: obj?.strongLevel.toLowerCase(),
+                color: obj?.color,
+                iconName: obj?.iconName
+            }
+            return body
+        }
+        if (type === "other"){
+            const body = {
+                itemId: itemData.id,
+                type: type,
+                name: obj?.name,
+                text: obj?.text,
+                iconName: obj?.iconName,
+                color: obj?.color,
+            }
+            return body
+        }
+        return {}
+    }
+
     useEffect(() => {
         getItemData()
     }, [refresh])
 
     useEffect(() => {
-        setForm({
-            name: itemData?.name,
-            ref: itemData?.ref,
-            email: itemData?.email,
-            password: itemData?.password,
-            strongLevel: itemData?.passwordStrongLevel,
-            type: itemType,
-            color: itemData?.color,
-            iconName: itemData?.iconName
-        })
+        const body = inicializeValuesByType()
+        setForm({ ...body })
     }, [itemData])
 
-    useEffect(() => {handleValidation()}, [form?.password])
-
-    
-    
     return(
         <Container>
             <SubContainer>
@@ -181,78 +198,7 @@ export default function PasswordExpanded ({setShowOverContainer, itemId, itemTyp
 
                         <MiddleContainer>
 
-                            <IconContainer editMode={editMode}>
-                                {editMode ? (<SelectIconAndColor form={form} setForm={setForm}/>):(<StyledIcon color={itemData?.color}><IconComponent/></StyledIcon>)}
-                            </IconContainer>
-
-                            <InputWrapper>
-                                <InputDark 
-                                    label="Nome / Apelido"     
-                                    type="text" 
-                                    name={"name"} 
-                                    width="80%"
-                                    onChange={handleForm}
-                                    value={form?.name}
-                                    events={editMode ? ("initial"):("none")}
-                                    background={editMode ? (""):("#A0A0A023 !important")}
-                                />
-                                <CopyIconContainer onClick={() => handleCopy({value: form?.name, key:"name"})} isCopied={isCopied?.name}> 
-                                    {isCopied?.name ? (<BsCheck/>):(<AiOutlineCopy/>)}
-                                </CopyIconContainer>
-                            </InputWrapper>
-
-                            <InputWrapper>
-                                <InputDark 
-                                    label="Link / Referência"     
-                                    type="text" 
-                                    name={"ref"} 
-                                    width="80%"
-                                    onChange={handleForm}
-                                    value={form?.ref}
-                                    events={editMode ? ("initial"):("none")}
-                                    background={editMode ? (""):("#A0A0A023 !important")}
-                                />
-                                <CopyIconContainer onClick={() => handleCopy({value: form?.ref, key:"ref"})} isCopied={isCopied?.ref}> 
-                                    {isCopied?.ref ? (<BsCheck/>):(<AiOutlineCopy/>)}
-                                </CopyIconContainer>
-                            </InputWrapper>
-                            
-                            <InputWrapper>
-                                <InputDark 
-                                    label="Email"     
-                                    type="text" 
-                                    name={"email"} 
-                                    width="80%"
-                                    onChange={handleForm}
-                                    value={form?.email}
-                                    events={editMode ? ("initial"):("none")}
-                                    background={editMode ? (""):("#A0A0A023 !important")}
-                                />
-                                <CopyIconContainer onClick={() => handleCopy({value: form?.email, key:"email"})} isCopied={isCopied?.email}> 
-                                    {isCopied?.email ? (<BsCheck/>):(<AiOutlineCopy/>)}
-                                </CopyIconContainer>
-                            </InputWrapper>
-                            
-                            <InputWrapper>
-                                <InputDark 
-                                    label="Senha"     
-                                    type={showPassword ? ("text"):("password")} 
-                                    name={"password"} 
-                                    width="80%"
-                                    onChange={handleForm}
-                                    value={form?.password}
-                                    events={editMode ? ("initial"):("none")}
-                                    background={editMode ? (""):("#A0A0A023 !important")}
-                                />
-                                <CopyIconContainer onClick={() => handleCopy({value: form?.password, key:"password"})} isCopied={isCopied?.password}> 
-                                    {isCopied?.password ? (<BsCheck/>):(<AiOutlineCopy/>)}
-                                </CopyIconContainer>
-                                <PasswordIconContainer onClick={() => setShowPassword(!showPassword)}>
-                                    {showPassword ? (<BsFillEyeSlashFill/>):(<BsFillEyeFill/>)}
-                                </PasswordIconContainer>
-
-                                <PasswordValidation validation={validation} setForm={setForm} form={form}/>
-                            </InputWrapper>
+                            {formsObj[formatType(itemType)]}
                             
 
                             <ButtonContainer>
@@ -297,7 +243,8 @@ const Container = styled.div`
 const SubContainer = styled.div`
     width: 50%;
     right: 30vw;
-    min-height: 800px;
+    height: auto;
+    padding-bottom: 20px;
     background-color: #FAFAFA;
     z-index: 3;
     display: flex;
@@ -342,75 +289,7 @@ const ButtonContainer = styled.div`
     padding: 0 2vw;
     column-gap: 1vw;
 `
-const IconContainer = styled.div`
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    h3 {
-        font-size: 14px;
-        color: #9D9D9D;
-        text-decoration: underline;
-        margin-top: 5px;
-    }
-`
-const StyledIcon = styled.div`
-    width: auto;
-    height: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: ${props => props.color};
-    font-size: 50px;
-    padding: 10px;
-    border-radius: 10px;
-    background-color: #d9d9d9;
-`
-const InputWrapper = styled.div`
-    width: 100%;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    row-gap: 1vh;
-`
-const CopyIconContainer = styled.div`
-    position: absolute;
-    width: 45px;
-    height: 45px;
-    right: 2.2vw;
-    top: 1.3vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    cursor: pointer;
-    border: 2px solid #052e1bff;
-    border: ${props => props.isCopied ? ("3px solid #74C40C"):("2px solid #052e1bff")};
-    color: ${props => props.isCopied ? ("#FFFFFF"):("#052e1bff")};
-    background-color: ${props => props.isCopied ? ("#74C40C"):("#00000000")};
-    
-    user-select: none;
-    :hover {
-        border: 4px solid #74C40C;
-    }
-    svg {
-        font-size: ${props => props.isCopied ? ("40px"):("30px")};
-    }
-`
-const PasswordIconContainer = styled.div`
-    position: absolute;
-    top: 2vh;
-    right: 6vw;
-    color: #052E1B;
-    cursor: pointer;
-    svg {
-        font-size: 32px;
-        user-select: none;
-    }
-`
+
 const DeleteButton = styled.div`
     width: 55px;
     height: 55px;

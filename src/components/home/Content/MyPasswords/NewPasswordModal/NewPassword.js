@@ -73,7 +73,6 @@ export default function NewPassword ({setShowOverContainer, token, setRefresh, r
             }
             return body
         }
-        
         return {}
     }
 
