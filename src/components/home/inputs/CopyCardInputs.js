@@ -19,7 +19,7 @@ export default function CopyCardInputs({editMode, form, handleForm, setForm, ite
             securityCode: false,
             expirationDate: false,
             iconName: false,
-            issuer: "visa",
+            issuer: "none",
             color: false
         }
     );
@@ -103,6 +103,7 @@ export default function CopyCardInputs({editMode, form, handleForm, setForm, ite
                     value={form?.password}
                     events={editMode ? ("initial"):("none")}
                     background={editMode ? (""):("#A0A0A023 !important")}
+                    mask="9999 9999 9999 9999"
                 />
                 <CopyIconContainer onClick={() => handleCopy({value: form?.password, key:"password"})} isCopied={isCopied?.password}> 
                     {isCopied?.password ? (<BsCheck/>):(<AiOutlineCopy/>)}

@@ -40,7 +40,7 @@ export default function NewPassword ({setShowOverContainer, token, setRefresh, r
                 type: formatType(type),
                 name: obj?.name,
                 ownerName: obj?.ownerName,
-                number: obj?.number,
+                number: obj?.number.replace(/ /g, ""),
                 password: obj?.password,
                 securityCode: obj?.securityCode,
                 expirationDate: obj?.expirationDate,

@@ -31,6 +31,7 @@ export default function CardInputs ({handleForm, form, setForm}) {
                 width="80%"
                 onChange={handleForm}
                 value={form?.number}
+                mask="9999 9999 9999 9999"
             />
             <InputDark 
                 label="Senha do Cartão"     
@@ -55,6 +56,7 @@ export default function CardInputs ({handleForm, form, setForm}) {
                 width="80%"
                 onChange={handleForm}
                 value={form?.expirationDate}
+                mask="99/99"
             />
 
             <PasswordIconContainer onClick={() => setShowPassword(!showPassword)}>

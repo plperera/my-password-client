@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import SearchBar from "./SearchBar"
 import Filter from "./Filter"
 import PasswordCard from "./PasswordCard"
 import { useContext, useState } from "react"
@@ -107,7 +106,6 @@ export default function MyPasswords () {
                 }     
                 <UpperContainer>
                     <h1 onClick={() => setRefresh(refresh + 1)}>{"Minhas Senhas"}</h1>
-                    <SearchBar/>
                 </UpperContainer>
 
                 <MiddleContainer>
