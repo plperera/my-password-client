@@ -150,6 +150,9 @@ const SubContainer = styled.div`
     @media (max-width: 1366px) {
         max-height: 98vh;      
     }
+    @media (max-width: 850px) {
+       width: 94%;
+    }
 `
 const UpperContainer = styled.div`
     width: 100%;
@@ -176,6 +179,9 @@ const UpperContainer = styled.div`
         svg {
             font-size: 28px;
         }     
+    }
+    @media (max-width: 850px) {
+        padding: 0 4vw;
     }
 `
 const MiddleContainer = styled.div`

@@ -102,6 +102,10 @@ const Container = styled.div`
     @media (max-width: 1366px) {
         height: 35px;
     }
+    @media (max-width: 850px) {
+        width: 100%;
+        padding-left: 10vw;
+    }
 `
 const IconSelector = styled.div`
     width: 80px;
@@ -187,5 +191,11 @@ const ShowcaseContainer = styled.div`
     }
     @media (max-width: 1366px) {
         top: 5.5vh;
+    }
+    @media (max-width: 850px) {
+        top: 5.5vh;
+        left: 0;
+        width: 250px;
+        row-gap: 2vh;
     }
 `

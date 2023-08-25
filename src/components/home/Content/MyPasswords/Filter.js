@@ -130,6 +130,11 @@ const Container = styled.div`
     align-items: start;
     justify-content: center;
     padding-top: 2vh;
+    @media (max-width: 850px) {
+        height: 100%;
+        position: fixed;
+        padding-top: 6vh;
+    }
 `
 const SubContainer = styled.div`
     width: 22%;
@@ -142,6 +147,9 @@ const SubContainer = styled.div`
     border-radius: 15px;
     @media (max-width: 1366px) {
         width: 35%;                
+    }
+    @media (max-width: 850px) {
+        width: 94%;
     }
 `
 const UpperContainer = styled.div`
@@ -169,6 +177,9 @@ const UpperContainer = styled.div`
             font-size: 29px;
         }          
     }
+    @media (max-width: 850px) {
+        padding: 0 5vw;
+    }
 `
 const MiddleContainer = styled.div`
     width: 100%;
@@ -182,6 +193,10 @@ const MiddleContainer = styled.div`
     padding-bottom: 25px;
     @media (max-width: 1366px) {
         row-gap: 5vh;          
+    }
+    @media (max-width: 850px) {
+        padding: 0 5vw;
+        padding-bottom: 25px;
     }
 `
 const ButtonContainer = styled.div`

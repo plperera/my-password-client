@@ -60,6 +60,11 @@ const Container = styled.div`
     @media (max-width: 1366px) {
         width: 320px;                
     }    
+    @media (max-width: 850px) {
+       width: 100%;
+       border-left: 8px solid;
+       border-color: ${props => props.color};
+    }
 `
 const Title = styled.div`
     display: flex;
@@ -76,7 +81,11 @@ const IconContainer = styled.div`
         font-size: 35px;
         color: ${props => props.color};
         cursor: pointer;
+        @media (max-width: 850px) {
+            font-size: 40px;
+        }
     } 
+    
 `
 const TitleContainer = styled.div`
     width: calc(80% - 5px);;

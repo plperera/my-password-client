@@ -129,7 +129,11 @@ const Container = styled.div`
     height: 100vh;
     background-color: #FCF5EC;
     padding-top: 8vh;
-    
+    @media (max-width: 850px) {
+        padding-top: 3vh;
+        height: auto;
+        min-height: 75vh;
+    }
 `
 const UpperContainer = styled.div`
     width: 100%;
@@ -148,6 +152,14 @@ const UpperContainer = styled.div`
             font-size: 30px; 
         }       
     }
+    @media (max-width: 850px) {
+        flex-direction: column;
+        h1 {
+            width: 100%;
+            padding-left: 2vw;
+            margin-bottom: 2vh;
+        }
+    }
 `
 const MiddleContainer = styled.div`
     width: 100%;
@@ -156,6 +168,9 @@ const MiddleContainer = styled.div`
     display: flex;
     align-items: center;
     column-gap: 1.5vw;
+    @media (max-width: 850px) {
+        padding: 3vh 3vw;
+    }
 `
 const BottomContainer = styled.div`
     width: 100%;
@@ -167,6 +182,15 @@ const BottomContainer = styled.div`
     row-gap: 3vh;
     @media (max-width: 1366px) {
         grid-template-columns: 1fr 1fr 1fr;               
+    }
+    @media (max-width: 850px) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        height: auto;
+        padding: 0vh 3vw;
+        padding-bottom: 4vh;
     }
 `
 const NewPasswordButton = styled.div`

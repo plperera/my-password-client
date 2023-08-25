@@ -30,6 +30,11 @@ const Container = styled.div`
     @media (max-width: 1366px) {
         height: 35px; 
     }
+    @media (max-width: 850px) {
+        flex-direction: column;
+        height: auto;
+        row-gap: 1.5vh;
+    }
 `
 const OptionsContainer = styled.div`
     width: 46%;
@@ -38,6 +43,9 @@ const OptionsContainer = styled.div`
     display: flex;
     @media (max-width: 1366px) {
         height: 35px; 
+    }
+    @media (max-width: 850px) {
+        width: 86%;
     }
 `
 const OptionCard = styled.div`
@@ -54,5 +62,8 @@ const OptionCard = styled.div`
     cursor: pointer;
     @media (max-width: 1366px) {
         font-size: 14px;
+    }
+    @media (max-width: 850px) {
+        padding: 0 5vw;
     }
 `

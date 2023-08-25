@@ -239,6 +239,9 @@ const Container = styled.div`
     align-items: start;
     justify-content: center;
     padding-top: 2vh;
+    @media (max-width: 850px) {
+        padding-top: 4vh;
+    }
 `
 const SubContainer = styled.div`
     width: 50%;
@@ -254,6 +257,9 @@ const SubContainer = styled.div`
         max-height: 98vh;
         padding-bottom: 6px;
     } 
+    @media (max-width: 850px) {
+        width: 96%; 
+    }
 `
 const UpperContainer = styled.div`
     width: 100%;
@@ -282,6 +288,10 @@ const UpperContainer = styled.div`
         svg {
             font-size: 28px; 
         }
+    }
+    @media (max-width: 850px) {
+        padding: 0 4vw;
+        padding-top: 2vh;
     }
 `
 const MiddleContainer = styled.div`

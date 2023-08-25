@@ -5,6 +5,7 @@ export default function Dashboard ({OptionsObjArray, selected, setSelected, user
     return(
         <Container>          
             <h1>{`Olá, ${userData?.name}`}</h1>
+            <h2>{`WePass`}</h2>
             <OptionsContainer>
 
                 {
@@ -38,6 +39,9 @@ const Container = styled.div`
         cursor: pointer;
         user-select: none;
     }
+    h2 {
+        display: none;
+    }
     h3 {
         display: flex;
         align-items: center;
@@ -57,6 +61,30 @@ const Container = styled.div`
             font-size: 22px;
         }
     }
+    @media (max-width: 850px) {
+        width: 100%;
+        min-height: 10vh;
+        max-height: 10vh;
+        flex-direction: row;
+        h1 {
+            display: none;
+        }
+        h2 {
+            width: 60%;
+            display: flex;
+            align-items: center; 
+            justify-content: left;
+            padding-left: 7vw;
+            font-size: 24px;
+            font-weight: 600;
+            color: #D4ED6C;
+        }
+        h3 {
+            width: 20%;
+            font-size: 19px;
+            font-weight: 600;
+        }
+    }
 `
 const OptionsContainer = styled.div`
     width: 100%;
@@ -66,6 +94,9 @@ const OptionsContainer = styled.div`
     flex-direction: column;
     row-gap: 2vh;
     user-select: none;
+    @media (max-width: 850px) {
+        display: none;
+    }
 `
 const OptionCard = styled.div`
     width: 100%;

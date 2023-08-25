@@ -14,14 +14,14 @@ export default function Home () {
             component: <MyPasswords/>,
             name: "Minhas Senhas"
         },
-        {
-            component: <>Minhas Etiquetas</>,
-            name: "Minhas Etiquetas"
-        },
-        {
-            component: <>Gerador de Senhas</>,
-            name: "Gerador de Senhas"
-        },
+        // {
+        //     component: <>Minhas Etiquetas</>,
+        //     name: "Minhas Etiquetas"
+        // },
+        // {
+        //     component: <>Gerador de Senhas</>,
+        //     name: "Gerador de Senhas"
+        // },
     ]
     
     const [ selected, setSelected ] = useState(OptionsObjArray[0])
@@ -38,4 +38,7 @@ const Container = styled.div`
     width: 100%;
     min-height: 100vh;
     display: flex;
+    @media (max-width: 850px) {
+        flex-direction: column;
+    }
 `
