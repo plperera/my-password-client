@@ -52,7 +52,7 @@ export default function SignUp ({setHasLogin}) {
 
             <Input 
                 label="Senha"     
-                type="text" 
+                type="password"
                 name={"password"} 
                 width="80%"
                 onChange={handleForm}
@@ -61,7 +61,7 @@ export default function SignUp ({setHasLogin}) {
 
             <Input 
                 label="Repita a Senha"     
-                type="text" 
+                type="password"
                 name={"passwordVerify"} 
                 width="80%"
                 onChange={handleForm}

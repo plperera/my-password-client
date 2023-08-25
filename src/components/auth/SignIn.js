@@ -47,7 +47,7 @@ export default function SignIn ({setHasLogin}) {
 
             <Input 
                 label="Senha"     
-                type="text" 
+                type="password" 
                 name={"password"} 
                 width="80%"
                 onChange={handleForm}
