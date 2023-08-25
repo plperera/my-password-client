@@ -119,7 +119,7 @@ export default function MyPasswords () {
                     {itensData?.length > 0 ? (itensData?.map(e => <PasswordCard passwordData={e} setShowOverContainer={setShowOverContainer} setPasswordSelected={setPasswordSelected}/>)):(<EmptyPage/>)}
                 </BottomContainer>
             </>
-            ):(<>123</>)}
+            ):(<></>)}
             
         </Container>
     )
