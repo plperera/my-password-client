@@ -49,6 +49,14 @@ const Container = styled.div`
         cursor: pointer;
         user-select: none;
     }
+    @media (max-width: 1366px) {
+        h1 {
+            font-size: 17px;
+        }
+        h3 {
+            font-size: 22px;
+        }
+    }
 `
 const OptionsContainer = styled.div`
     width: 100%;
@@ -72,4 +80,7 @@ const OptionCard = styled.div`
     font-weight: 600;
     font-size: 20px;
     cursor: pointer;
+    @media (max-width: 1366px) {
+        font-size: 16px;        
+    }
 `

@@ -250,6 +250,10 @@ const SubContainer = styled.div`
     display: flex;
     flex-direction: column;
     border-radius: 15px;
+    @media (max-width: 1366px) {
+        max-height: 98vh;
+        padding-bottom: 6px;
+    } 
 `
 const UpperContainer = styled.div`
     width: 100%;
@@ -267,6 +271,17 @@ const UpperContainer = styled.div`
         font-size: 32px;
         cursor: pointer;
         margin-right: -2px;
+    }
+    @media (max-width: 1366px) {
+        align-items: end;
+        height: auto;
+        padding-top: 2vh;
+        h1 {
+            font-size: 22px; 
+        }
+        svg {
+            font-size: 28px; 
+        }
     }
 `
 const MiddleContainer = styled.div`
@@ -289,7 +304,6 @@ const ButtonContainer = styled.div`
     padding: 0 2vw;
     column-gap: 1vw;
 `
-
 const DeleteButton = styled.div`
     width: 55px;
     height: 55px;
@@ -303,5 +317,11 @@ const DeleteButton = styled.div`
         font-size: 34px;
         user-select: none;
         color: #CF4646;
+    }
+    @media (max-width: 1366px) {
+
+        svg {
+            font-size: 28px; 
+        }
     }
 `

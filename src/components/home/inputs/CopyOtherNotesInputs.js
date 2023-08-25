@@ -136,15 +136,8 @@ const CopyIconContainer = styled.div`
     svg {
         font-size: ${props => props.isCopied ? ("40px"):("30px")};
     }
-`
-const PasswordIconContainer = styled.div`
-    position: absolute;
-    top: 2vh;
-    right: 6vw;
-    color: #052E1B;
-    cursor: pointer;
-    svg {
-        font-size: 32px;
-        user-select: none;
+    @media (max-width: 1366px) {
+        right: 1vw;
+        top: 2vh;
     }
 `

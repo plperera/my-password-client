@@ -1,6 +1,8 @@
 import styled from "styled-components"
 import ICON_MAPPING from "../../../../common/icons/iconsObj";
 import { RiLockPasswordFill } from 'react-icons/ri';
+import { CgDanger } from 'react-icons/cg';
+import { HiShieldCheck } from 'react-icons/hi';
 
 export default function PasswordCard ({passwordData, setShowOverContainer, setPasswordSelected}) {
     const IconComponent = ICON_MAPPING[passwordData?.iconName]
@@ -8,6 +10,7 @@ export default function PasswordCard ({passwordData, setShowOverContainer, setPa
         setPasswordSelected(passwordData)
         setShowOverContainer("showPasswordExpanded")
     }
+
     return(
         
         <Container color={passwordData?.color} onClick={() => handleSelect()}>  
@@ -23,6 +26,14 @@ export default function PasswordCard ({passwordData, setShowOverContainer, setPa
             <LinkContainer>
                 <h2>{passwordData?.linkRef}</h2>
             </LinkContainer>
+
+            {passwordData?.passwordStrongLevel ? (
+                <StrongLevelContainer isStrong={passwordData?.passwordStrongLevel === "forte"}>
+                    <span>{`Senha ${passwordData?.passwordStrongLevel.toUpperCase()}`}</span>
+                    {passwordData?.passwordStrongLevel === "forte" ? (<HiShieldCheck/>):(<CgDanger/>)}
+                </StrongLevelContainer>
+            ):(<></>)}
+            
         </Container>
     )
 }
@@ -36,12 +47,19 @@ const Container = styled.div`
     align-items: center;
     flex-wrap: wrap;
     font-size: 20px;
-    background-color: #D9D9D9;
+    background-color: #E7E7E7;
     user-select: none;
     cursor: pointer;
     border-left: 5px solid;
     border-color: ${props => props.color};
     position: relative;
+    :hover {
+        transform: translateY(-.6vh);
+        background-color: #E7E7E7B3;
+    }
+    @media (max-width: 1366px) {
+        width: 320px;                
+    }    
 `
 const Title = styled.div`
     display: flex;
@@ -74,4 +92,26 @@ const LinkContainer = styled.div`
     position: absolute;
     bottom: 8px;
     color: #9B9B9B;
+`
+const StrongLevelContainer = styled.div`
+    position: absolute;
+    width: auto;
+    height: 25px;
+    background-color: ${props => props.isStrong ? ("#39AD3B00"):("#BE4949")};
+    right: 8px;
+    top: 10px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+    padding: 2px 10px;
+    span {
+        font-size: 10px;
+        color: #FFFFFF;
+        display: ${props => props.isStrong ? ("none"):("initial")};
+    }
+    svg {
+        font-size: ${props => props.isStrong ? ("30px"):("20px")};;        
+        color: ${props => props.isStrong ? ("#18842C"):("#FFFFFF")};
+    }
 `

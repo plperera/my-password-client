@@ -203,6 +203,10 @@ const CopyIconContainer = styled.div`
     svg {
         font-size: ${props => props.isCopied ? ("40px"):("30px")};
     }
+    @media (max-width: 1366px) {
+        right: 1vw;
+        top: 2vh;
+    }    
 `
 const PasswordIconContainer = styled.div`
     position: absolute;
@@ -214,4 +218,8 @@ const PasswordIconContainer = styled.div`
         font-size: 32px;
         user-select: none;
     }
+    @media (max-width: 1366px) {
+        top: 3vh;
+        right: 6.5vw;
+    } 
 `

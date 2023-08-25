@@ -140,6 +140,9 @@ const SubContainer = styled.div`
     display: flex;
     flex-direction: column;
     border-radius: 15px;
+    @media (max-width: 1366px) {
+        width: 35%;                
+    }
 `
 const UpperContainer = styled.div`
     width: 100%;
@@ -158,6 +161,14 @@ const UpperContainer = styled.div`
         cursor: pointer;
         margin-right: -2px;
     }
+    @media (max-width: 1366px) {
+        h1 {
+            font-size: 27px; 
+        }   
+        svg {
+            font-size: 29px;
+        }          
+    }
 `
 const MiddleContainer = styled.div`
     width: 100%;
@@ -169,6 +180,9 @@ const MiddleContainer = styled.div`
     padding-top: 2vh;
     row-gap: 1.4vh;
     padding-bottom: 25px;
+    @media (max-width: 1366px) {
+        row-gap: 5vh;          
+    }
 `
 const ButtonContainer = styled.div`
     width: 100%;
@@ -197,6 +211,12 @@ const OrderByContainer = styled.div`
         width: 90%;
         font-size: 14px;
         margin-bottom: 5px;
+        @media (max-width: 1366px) {
+            font-size: 16px;        
+        }
+    }
+    @media (max-width: 1366px) {
+        row-gap: 4vh;      
     }
 `
 const Select = styled.select`
@@ -246,5 +266,12 @@ const MultipleSelect = styled(Select)`
             font-size: 17px;
             font-weight: 600;
         }
+        @media (max-width: 1366px) {
+            padding: 6px 8px;  
+        }
     }
+    @media (max-width: 1366px) {
+        height: 130px; 
+    }
+    
 `

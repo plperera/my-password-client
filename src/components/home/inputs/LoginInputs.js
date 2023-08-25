@@ -87,5 +87,9 @@ const PasswordIconContainer = styled.div`
         font-size: 30px;
         user-select: none;
     }
+    @media (max-width: 1366px) {
+        top: 41.5vh;
+        right: 31.5vw;
+    } 
 `
 

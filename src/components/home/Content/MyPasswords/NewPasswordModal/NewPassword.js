@@ -57,7 +57,7 @@ export default function NewPassword ({setShowOverContainer, token, setRefresh, r
                 ref: obj?.ref,
                 email: obj?.email,
                 password: obj?.password,
-                passwordStrongLevel: obj?.strongLevel,
+                passwordStrongLevel: obj?.strongLevel?.toLowerCase(),
                 color: obj?.color,
                 iconName: obj?.iconName
             }
@@ -91,8 +91,6 @@ export default function NewPassword ({setShowOverContainer, token, setRefresh, r
             console.log(error)
         }
     }
-
-    
 
     return(
         <Container>
@@ -137,6 +135,9 @@ const Container = styled.div`
     align-items: start;
     justify-content: center;
     padding-top: 2vh;
+    @media (max-width: 1366px) {
+        padding-top: 2vh;   
+    }
 `
 const SubContainer = styled.div`
     width: 50%;
@@ -146,6 +147,9 @@ const SubContainer = styled.div`
     display: flex;
     flex-direction: column;
     border-radius: 15px;
+    @media (max-width: 1366px) {
+        max-height: 98vh;      
+    }
 `
 const UpperContainer = styled.div`
     width: 100%;
@@ -164,6 +168,15 @@ const UpperContainer = styled.div`
         cursor: pointer;
         margin-right: -2px;
     }
+    @media (max-width: 1366px) {
+        h1 {
+            font-size: 22px;
+            font-weight: 600;
+        }
+        svg {
+            font-size: 28px;
+        }     
+    }
 `
 const MiddleContainer = styled.div`
     width: 100%;
@@ -175,6 +188,10 @@ const MiddleContainer = styled.div`
     padding-top: 2vh;
     row-gap: 1.4vh;
     padding-bottom: 50px;
+    @media (max-width: 1366px) {
+        padding-top: 0vh;  
+        padding-bottom: 25px;  
+    }
 `
 const ButtonContainer = styled.div`
     width: 80%;
@@ -182,4 +199,7 @@ const ButtonContainer = styled.div`
     align-items: center;
     justify-content: center;
     margin-top: 3vh;
+    @media (max-width: 1366px) {
+        margin-top: 2vh;   
+    }
 `

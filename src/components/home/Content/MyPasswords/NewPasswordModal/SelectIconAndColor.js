@@ -99,6 +99,9 @@ const Container = styled.div`
     height: 40px;
     display: flex;
     column-gap: 1.2vw;
+    @media (max-width: 1366px) {
+        height: 35px;
+    }
 `
 const IconSelector = styled.div`
     width: 80px;
@@ -116,10 +119,12 @@ const IconPreviewContainer = styled.div`
     justify-content: center;
     width: 70%;
     height: 100%;
-    
     svg {
         font-size: 28px;
         color: ${props => props.color};
+        @media (max-width: 1366px) {
+            font-size: 25px;
+        }
     }
 `
 const ColorPreviewContainer = styled.div`
@@ -131,6 +136,9 @@ const ColorPreviewContainer = styled.div`
     svg {
         font-size: 28px;
         color: #A7A7A7;
+        @media (max-width: 1366px) {
+            font-size: 25px;
+        }
     }
 `
 const ArrowDownContainer = styled.div`
@@ -147,6 +155,10 @@ const ColorContainer = styled.div`
     border-radius: 50px;
     border: 0px outset #4B4B4B;
     cursor: pointer;
+    @media (max-width: 1366px) {
+        width: 22px;
+        height: 22px;
+    }
 `
 const ShowcaseContainer = styled.div`
     position: absolute;
@@ -172,5 +184,8 @@ const ShowcaseContainer = styled.div`
         :hover {
             background-color: #CACACA;
         }
+    }
+    @media (max-width: 1366px) {
+        top: 5.5vh;
     }
 `

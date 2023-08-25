@@ -9,6 +9,7 @@ import PasswordExpanded from "./PasswordExpandedModal/PasswordExpanded"
 import UserContext from "../../../../context/UserContext"
 import api from "../../../../services/API"
 import { useCustomForm } from "../../../../hooks/useCustomForms"
+import EmptyPage from "./EmptyPage"
 
 export default function MyPasswords () {
 
@@ -115,10 +116,10 @@ export default function MyPasswords () {
                 </MiddleContainer>
 
                 <BottomContainer>
-                    {itensData ? (itensData?.map(e => <PasswordCard passwordData={e} setShowOverContainer={setShowOverContainer} setPasswordSelected={setPasswordSelected}/>)):(<></>)}
+                    {itensData?.length > 0 ? (itensData?.map(e => <PasswordCard passwordData={e} setShowOverContainer={setShowOverContainer} setPasswordSelected={setPasswordSelected}/>)):(<EmptyPage/>)}
                 </BottomContainer>
             </>
-            ):(<></>)}
+            ):(<>123</>)}
             
         </Container>
     )
@@ -142,6 +143,11 @@ const UpperContainer = styled.div`
         font-weight: 600;
         color: #052E1B;
     }
+    @media (max-width: 1366px) {
+        h1 {
+            font-size: 30px; 
+        }       
+    }
 `
 const MiddleContainer = styled.div`
     width: 100%;
@@ -159,6 +165,9 @@ const BottomContainer = styled.div`
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     column-gap: 2vw;
     row-gap: 3vh;
+    @media (max-width: 1366px) {
+        grid-template-columns: 1fr 1fr 1fr;               
+    }
 `
 const NewPasswordButton = styled.div`
     width: 280px;
@@ -171,6 +180,10 @@ const NewPasswordButton = styled.div`
     font-size: 20px;
     user-select: none;
     cursor: pointer;
+    :hover {
+        transform: translateY(-.6vh);
+        background-color: #E0FF63;
+    }
 `
 const FilterButton = styled.div`
     width: 200px;
@@ -183,4 +196,8 @@ const FilterButton = styled.div`
     border-radius: 5px;
     user-select: none;
     cursor: pointer;
+    :hover {
+        transform: translateY(-.6vh);
+        background-color: #EAE9E9;
+    }
 `

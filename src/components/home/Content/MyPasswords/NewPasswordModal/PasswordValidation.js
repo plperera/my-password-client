@@ -50,6 +50,11 @@ const PasswordValidationLine = styled.div`
         margin-right: 0.4vw;
         font-size: 20px;
     }
+    @media (max-width: 1366px) {
+        h3 {
+            font-size: 14px; 
+        }
+    }
 `
 const StyledCheck = styled(AiFillCheckCircle)`
     color: #74C40C;

@@ -27,12 +27,18 @@ const Container = styled.div`
     border-radius: 15px;
     display: flex;
     justify-content: space-between;
+    @media (max-width: 1366px) {
+        height: 35px; 
+    }
 `
 const OptionsContainer = styled.div`
     width: 46%;
     height: 40px;
     border-radius: 15px;
     display: flex;
+    @media (max-width: 1366px) {
+        height: 35px; 
+    }
 `
 const OptionCard = styled.div`
     width: auto;
@@ -46,4 +52,7 @@ const OptionCard = styled.div`
     font-weight: ${props => props.isSelected ? ("600"):("600")};
     border-right: 3px solid #CEC8C2;
     cursor: pointer;
+    @media (max-width: 1366px) {
+        font-size: 14px;
+    }
 `
