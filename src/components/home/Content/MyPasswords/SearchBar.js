@@ -29,6 +29,10 @@ const Container = styled.div`
     @media (max-width: 1366px) {
         width: 24vw;
     }
+    @media (max-width: 850px) {
+        width: 95%;
+        position: relative;
+    }
 `
 const SearchInput = styled.input`
     width: 100%;
@@ -55,6 +59,9 @@ const SearchInput = styled.input`
     @media (max-width: 1366px) {
         font-size: 15px;
     }
+    @media (max-width: 850px) {
+        padding-left: 5vw;
+    }
 `
 const SearchIcon = styled(AiOutlineSearch)`
     font-size: 25px;
@@ -64,5 +71,10 @@ const SearchIcon = styled(AiOutlineSearch)`
 
     @media (max-width: 1366px) {
         font-size: 20px;
+    }
+    @media (max-width: 850px) {
+        position: absolute;
+        right: 4vw;
+        font-size: 25px;
     }
 `

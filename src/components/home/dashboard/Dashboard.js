@@ -1,7 +1,20 @@
 import styled from "styled-components"
+import api from "../../../services/API"
+import UserContext from "../../../context/UserContext";
+import { useContext } from "react";
 
 export default function Dashboard ({OptionsObjArray, selected, setSelected, userData}) {
-
+    const { setUserData } = useContext(UserContext);
+    console.log(userData)
+    async function Logout(){
+        try {
+            const response = await api.LogoutSession(userData?.token)
+            console.log(response)
+            setUserData({})
+        } catch (error) {
+            console.log(error)
+        }
+    }
     return(
         <Container>          
             <h1>{`Olá, ${userData?.name}`}</h1>
@@ -17,7 +30,7 @@ export default function Dashboard ({OptionsObjArray, selected, setSelected, user
                 }
 
             </OptionsContainer>
-            <h3>{"Sair"}</h3>
+            <h3 onClick={() => Logout()}>{"Sair"}</h3>
         </Container>
     )
 }

@@ -7,8 +7,8 @@ function CreateAccount(body) {
 function CreateSession(body) {
     return axios.post(`${BASE_URL}/auth/sign-in`, body);
 }
-function LogoutSession(body) {
-    return axios.delete(`${BASE_URL}/auth/sign-in`, body);
+function LogoutSession(token) {
+    return axios.delete(`${BASE_URL}/auth/logout`, {headers: { Authorization: `Bearer ${token}`}});
 }
 function GetAllItens(token) {
     return axios.get(`${BASE_URL}/item`, {headers: { Authorization: `Bearer ${token}`}});
