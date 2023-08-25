@@ -1,13 +1,12 @@
 import { useState } from "react"
 import InputDark from "../../../common/form/InputDark"
 import styled from "styled-components";
-import { BsFillEyeFill, BsFillEyeSlashFill, BsCheck } from 'react-icons/bs';
+import { BsCheck } from 'react-icons/bs';
 import { AiOutlineCopy } from 'react-icons/ai';
 import ICON_MAPPING from "../../../common/icons/iconsObj";
 import SelectIconAndColor from "../Content/MyPasswords/NewPasswordModal/SelectIconAndColor";
 
 export default function CopyOtherNotesInputs({editMode, form, handleForm, setForm, itemData}) {
-    const [ showPassword, setShowPassword ] = useState(false)
     const [ isloading, setIsloading ] = useState(false)
     const IconComponent = ICON_MAPPING[itemData?.iconName]
     const [ isCopied, setIsCopied ] = useState(

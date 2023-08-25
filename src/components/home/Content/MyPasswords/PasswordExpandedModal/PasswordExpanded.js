@@ -179,11 +179,13 @@ export default function PasswordExpanded ({setShowOverContainer, itemId, itemTyp
 
     useEffect(() => {
         getItemData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refresh])
 
     useEffect(() => {
         const body = inicializeValuesByType()
         setForm({ ...body })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [itemData])
 
     return(

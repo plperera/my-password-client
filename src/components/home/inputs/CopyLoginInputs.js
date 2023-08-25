@@ -61,6 +61,7 @@ export default function CopyLoginInputs({editMode, form, handleForm, setForm, it
         }      
     }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {handleValidation()}, [form?.password])
 
     return(

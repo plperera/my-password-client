@@ -7,6 +7,7 @@ export default function InformationType ({form, setForm}) {
     const [selectedType, setSelectedType ] = useState("Login")
     useEffect(() => {
         setForm({...form, type: selectedType, password:''})
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedType])
 
     return(
